@@ -18,7 +18,7 @@ public class TextoAsignar implements KeyListener, MouseListener {
 	public TextoAsignar(PanelAsignar PA) {
 		
 		this.PA = PA;
-		this.bAsignar = new BotonesAsignar(null);
+		//this.bAsignar = new BotonesAsignar(null);
 	}
 	
 	

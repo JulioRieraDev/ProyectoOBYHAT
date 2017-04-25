@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.obyhat.interfaces.CRUD;
+import com.obyhat.modelo.dto.CategoriaDTO;
 import com.obyhat.modelo.dto.MaterialesDTO;
 import com.obyhat.modelo.conexion.Conexion;
 import java.util.List;
@@ -22,10 +23,10 @@ public class MaterialesDAO implements CRUD<MaterialesDTO>{
    
     
     private static final String SQL_INSERT = "INSERT INTO `material`(`nombreMaterial`, `cantidadMaterial`, `fechaRegistro`) VALUES (?,?,?)";
-     /**private static final String SQL_DELETE = "DELETE FROM material WHERE nombreMaterial = ?";
+    private static final String SQL_DELETE = "DELETE FROM material WHERE nombreMaterial = ?";
 	private static final String SQL_UPDATE = "UPDATE `material` SET `nombreMaterial`=?,`cantidadMaterial`=?";
 	private static final String SQL_READ   = "SELECT * FROM `material` WHERE nombreMaterial = ?; ";
-	private static final String SQL_READALL= "SELECT * FROM `material`;"; */
+	private static final String SQL_READALL= "SELECT * FROM `material`;";
     
     
     private static final Conexion miConexion = Conexion.saberEstado();
@@ -83,7 +84,29 @@ public class MaterialesDAO implements CRUD<MaterialesDTO>{
 
     @Override
     public List<MaterialesDTO> ConsultarTodos() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+    	ArrayList<MaterialesDTO> materiales = new ArrayList<>();
+		
+			try {
+				
+				pStatement = miConexion.obtenerConexion().prepareStatement(SQL_READALL);
+				res = pStatement.executeQuery();
+				
+				while (res.next()) {
+					
+					materiales.add(new MaterialesDTO(res.getString(2),res.getInt(3)));
+				}
+	                        
+	                        
+			} catch (Exception e) {
+				
+				JOptionPane.showMessageDialog(null, "Error al intentar consultar todos los materiales. \n"+e, null, JOptionPane.INFORMATION_MESSAGE);
+			} finally {
+			
+				miConexion.Desconectar();
+			}
+		
+		return materiales;
     }
     
 }

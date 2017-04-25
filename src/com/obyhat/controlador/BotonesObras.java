@@ -25,7 +25,7 @@ public class BotonesObras implements ActionListener {
 		
 		this.PO = PO;
 		this.miObraDAO = new ObraDAO();
-		this.asignar = new BotonesAsignar(null);
+		//this.asignar = new BotonesAsignar(null);
 	}
 
 

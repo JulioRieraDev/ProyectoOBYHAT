@@ -82,20 +82,20 @@ public class PanelAsignar extends JPanel{
         p.setMaximumSize(panelD);
     }
     
-    public JScrollPane Creandotabla(JScrollPane scrollPane){
+    public JScrollPane Creandotabla(){
     
         modeloTabla = new DefaultTableModel(datos,column);
         
-        scrollPane= new JScrollPane();
+        scrollPane2= new JScrollPane();
         tablaSeleccionados= new JTable();
         tablaSeleccionados.getTableHeader().setFont(new Font ("Acme", 0,16));// Encabezado de tablaSeleccionados
         //tablaSeleccionados.getTableHeader().setBackground(Color.black);
         // tablaSeleccionados.getTableHeader().setForeground(Color.BLUE);
         //tablaSeleccionados.getTableHeader().setReorderingAllowed(false);// No permite que se muevan las columnas
         tablaSeleccionados.setModel(modeloTabla);
-        scrollPane.setViewportView(tablaSeleccionados);
+        scrollPane2.setViewportView(tablaSeleccionados);
         
-        return scrollPane;
+        return scrollPane2;
     }
     
     
@@ -155,13 +155,6 @@ public class PanelAsignar extends JPanel{
         P4.add(l4);
         comboObra = new JComboBox();
         comboObra.setBounds(5, 26, 261, 28);
-        comboObra.addMouseListener(TA);
-        
-        Component[] components = this.comboObra.getComponents();
-        for(final Component component : components) {
-            component.addMouseListener(TA);
-        }
-        this.comboObra.getEditor().getEditorComponent().addMouseListener(TA);
         
         P4.add(comboObra);
         Separator S4 = new Separator();
@@ -198,7 +191,7 @@ public class PanelAsignar extends JPanel{
         l1.setBounds(5, 0, 212, 25);
         P1.add(l1);
         txtNombreMat = new txt();
-        txtNombreMat.setBounds(5, 26, 261, 28);
+        txtNombreMat.setBounds(5, 26, 230, 28);
         P1.add(txtNombreMat);
         Separator S1 = new Separator();
         S1.setBounds(5, 56, 261, 14);
@@ -324,7 +317,7 @@ public class PanelAsignar extends JPanel{
         PanelInicio PC = new PanelInicio();
         PC.setLayout(new BorderLayout());
         
-            PC.add(Creandotabla(scrollPane2));
+            PC.add(Creandotabla());
             
         panelCentral.add(PC);
         

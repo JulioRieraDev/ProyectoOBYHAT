@@ -215,7 +215,7 @@ public class PanelObras extends JPanel{
         JPanel PC = new JPanel();
         PC.setLayout(new BorderLayout());
         
-            PC.add(Creandotabla(scrollPane2));
+            PC.add(Creandotabla());
             
         panelCentral.add(PC);
         
@@ -279,17 +279,17 @@ public class PanelObras extends JPanel{
         p.setMaximumSize(panelD);
     }
     
-    public JScrollPane Creandotabla(JScrollPane scrollPane){
+    public JScrollPane Creandotabla(){
     
         modeloTabla = new DefaultTableModel(null,column);
         
-        scrollPane= new JScrollPane();
+        JScrollPane scrollPane3 = new JScrollPane();
         tablaObras= new JTable();
         tablaObras.getTableHeader().setFont(new Font ("Acme", 1,16));// Encabezado de tablaObras.
         tablaObras.setModel(modeloTabla);
-        scrollPane.setViewportView(tablaObras);
+        scrollPane3.setViewportView(tablaObras);
         
-        return scrollPane;
+        return scrollPane3;
     }
     
     

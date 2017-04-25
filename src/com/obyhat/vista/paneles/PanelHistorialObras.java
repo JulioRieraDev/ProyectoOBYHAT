@@ -5,8 +5,6 @@
  */
 package com.obyhat.vista.paneles;
 
-import Controlador.ControladorAsignar;
-import static Utilidades.fontComun.*;
 import java.awt.Color;
 import java.awt.Font;
 import javax.swing.JButton;
@@ -14,6 +12,8 @@ import javax.swing.JComboBox;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
+
+import com.obyhat.resources.fonts.fontComun;
 
 /**
  *
@@ -108,7 +108,7 @@ public class PanelHistorialObras extends javax.swing.JPanel {
         gridBagConstraints.insets = new java.awt.Insets(55, 57, 186, 59);
         panelDerecho.add(scrollTabla2, gridBagConstraints);
 
-        labelTitulo2.setFont(fontTit);
+        labelTitulo2.setFont(fontComun.fontTit);
         labelTitulo2.setForeground(new java.awt.Color(255, 255, 255));
         labelTitulo2.setText("Historial de materiales agregados");
         gridBagConstraints = new java.awt.GridBagConstraints();

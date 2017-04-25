@@ -82,6 +82,16 @@ public class MaterialesDTO {
             
             return datos;
         }
+    
+    public final Object[] toArrayDos(){
+        Object[] datos = new Object[2];
+        
+        datos[0] = this.nombreMaterial;  
+        datos[1] = this.cantidadMaterial;
+        
+        
+        return datos;
+    }
 
     public int getIdMaterial() {
         return idMaterial;
