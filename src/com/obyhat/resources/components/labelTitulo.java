@@ -14,9 +14,9 @@ import javax.swing.JLabel;
  *
  * @author Jeis
  */
-public class labelTitulos extends JLabel {
+public class labelTitulo extends JLabel {
     
-    public labelTitulos(String titulo){
+    public labelTitulo(String titulo){
         setText(titulo);
         setFont(new Font("Tahoma",0,23));
         setForeground(Color.white);

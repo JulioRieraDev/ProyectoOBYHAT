@@ -15,8 +15,11 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.sql.Date;
 import java.util.Calendar;
+import java.util.ResourceBundle.Control;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
@@ -38,96 +41,72 @@ import com.obyhat.modelo.dto.CategoriaDTO;
 import com.obyhat.resources.components.Botones;
 import com.obyhat.resources.components.Separator;
 import com.obyhat.resources.components.labelForm;
-import com.obyhat.resources.components.labelTitulos;
+import com.obyhat.resources.components.labelTitulo;
 import com.obyhat.resources.components.txt;
 import com.toedter.calendar.JDateChooser;
 import com.toedter.calendar.JDayChooser;
-
 /**
  *
  * @author Jeis
  */
 public class PanelAsignar extends JPanel{
     
-    private DefaultTableModel modeloTabla;
-    private String [][] datos = {};
-    private String [] column = {"Obra","Fecha","Material","Cantidad Seleccionada"};
-    private JTable tablaSeleccionados;
+	// Tablas.
+    private DefaultTableModel modeloTablaMat, modeloTablaAsig;
+    private JTable 		tablaSeleccionados,tablaMateriales;
+    private String [][] datosMat   = {};
+    private String [][] datosAsig  = {};
+    private String [] 	columnMat  = {"Material","Cantidad Disponible"};
+    private String [] 	columnAsig = {"Obra","Fecha","Material","Cantidad Seleccionada"};
     
-    private JPanel panelCentral,panelIzquierdo;
-    private JScrollPane scrollPane,scrollPane2;
+    //Contenedores.
+    private JPanel 		panelCentral,panelIzquierdo,panelCentral2,panelNorte,panelSur,
+    			   		panelConstructor,PO,PE;
+    private JScrollPane scrollConstructor,scrollTablaMat,scrollTablaAsig;
     
-    private labelForm labelNomMaterial,labelCogMaterial,labelCanDisponible,
-            labelSelecCantidad;
-    private txt txtNombreMat,txtCodigoMat,txtCantidadDis,txtCantidadSel;
-    private Separator separatorNom,separatorCod,separatorDis,separatorSel;
-    private labelTitulos labelTitulo1,labelTitulo2;
-    private Botones btnBuscar,btnLimpiar,btnAgregar,btnEditarSelect,btnActualizar,btnCancelar,
-            btnEliminarSelect,btnProcesarSelect;
-    private JComboBox comboObra;
+    // Componentes personalizados.
+    private labelForm 	selecCantidad;
+    private txt 		txtNombreMat,txtCantidadSel;
+    private Separator 	separatorNom,separatorCod;
+    private labelTitulo labelTitulo1,materialesDis,asignarMat;
+    private Botones 	btnAgregar,btnActualizar,btnCancelar,btnEliminarSelect,
+    					btnProcesarSelect;
     
+    private JComboBox 	comboObra;
+    // Elegir fecha.
     private JDateChooser comboFecha;
-    
-    private Date sqlDate;
-    
-    private BotonesAsignar BA = new BotonesAsignar(this);
-    private TextoAsignar   TA = new TextoAsignar(this);
-    
+    // Controladores
+    private BotonesAsignar BA      = new BotonesAsignar(this);
+    private TextoAsignar TA 	   = new TextoAsignar(this);
     private GridBagConstraints gbc = new GridBagConstraints();
     
-    private void dimension(int x, int y, JPanel p){
-    
-        Dimension panelD= new Dimension(x,y);
-        p.setPreferredSize(panelD);
-        p.setMaximumSize(panelD);
-    }
-    
-    public JScrollPane Creandotabla(){
-    
-        modeloTabla = new DefaultTableModel(datos,column);
-        
-        scrollPane2= new JScrollPane();
-        tablaSeleccionados= new JTable();
-        tablaSeleccionados.getTableHeader().setFont(new Font ("Acme", 0,16));// Encabezado de tablaSeleccionados
-        //tablaSeleccionados.getTableHeader().setBackground(Color.black);
-        // tablaSeleccionados.getTableHeader().setForeground(Color.BLUE);
-        //tablaSeleccionados.getTableHeader().setReorderingAllowed(false);// No permite que se muevan las columnas
-        tablaSeleccionados.setModel(modeloTabla);
-        scrollPane2.setViewportView(tablaSeleccionados);
-        
-        return scrollPane2;
-    }
-    
-    
-    public void LimpiarCampos(){
-        
-        txtNombreMat.setText("");
-        txtCodigoMat.setText("");
-        txtCantidadDis.setText("");
-        txtCantidadSel.setText("");
-        comboObra.setSelectedIndex(0);
-    }
     
     public PanelAsignar(){
-        setLayout(new GridLayout(1, 0, 0, 0));
+        
+    	setLayout(new GridLayout(1, 0, 0, 0));
 		
-	scrollPane = new JScrollPane();	
+    	scrollConstructor = new JScrollPane();	
 		
-	JPanel panelContenedor = new JPanel();
-	panelContenedor.setBackground(Color.GRAY);
-        panelContenedor.setPreferredSize(new Dimension(950, 600));
-	panelContenedor.setLayout(new BorderLayout(0, 0));
-		
+    	panelConstructor = new JPanel();
+    	panelConstructor.setBackground(Color.GRAY);
+        panelConstructor.setLayout(new BorderLayout(0, 0));
+        panelConstructor.setPreferredSize(new Dimension(950, 600));
+        
         PanelIzquierdo();
-        PanelCentral();
+        //PanelCentral();
+        //panelSelObras();
         
-        panelContenedor.add(panelIzquierdo,BorderLayout.WEST);
-        panelContenedor.add(panelCentral,BorderLayout.CENTER);
+        panelConstructor.add(panelIzquierdo,BorderLayout.WEST);
+        panelConstructor.add(PanelCentral(),BorderLayout.CENTER);
         
-        scrollPane.setViewportView(panelContenedor);
-        add(scrollPane);
+        scrollConstructor.setViewportView(panelConstructor);
+        add(scrollConstructor);
         
+        // Llenar automaticamente las tablas con la consultas
+        // a la base de datos.
         this.BA.obtenerObras();
+        this.BA.obtenerMateriales();
+        this.control();
      }      
     
     private void PanelIzquierdo(){
@@ -138,8 +117,13 @@ public class PanelAsignar extends JPanel{
         panelIzquierdo.setLayout(new BorderLayout());
         panelIzquierdo.setBorder(new LineBorder(new Color(42, 59, 80),3,true));
         
+        labelTitulo1 = new labelTitulo("Registrar... ");
+		labelTitulo1.setBounds(23, 47, 245, 25);
+		panelIzquierdo.add(labelTitulo1);
+        
         JPanel panel = new JPanel();
         panel.setOpaque(false);
+        panel.setLocation(100, 23);
         panel.setLayout(new GridBagLayout());
         panelIzquierdo.add(panel);
         gbc.insets = new Insets(5,0,5,0);
@@ -181,185 +165,129 @@ public class PanelAsignar extends JPanel{
         P5.add(S5);
         panel.add(P5,gbc);
         
-        gbc.gridx = 0;	gbc.gridy = 2;
-        JPanel P1 = new JPanel();
-        P1.setOpaque(false);
-        P1.setLayout(null);
-        P1.setPreferredSize(new Dimension(280,60));
-        JLabel l1 = new JLabel("Nombre del material");
-        l1.setForeground(Color.WHITE);
-        l1.setBounds(5, 0, 212, 25);
-        P1.add(l1);
-        txtNombreMat = new txt();
-        txtNombreMat.setBounds(5, 26, 230, 28);
-        P1.add(txtNombreMat);
-        Separator S1 = new Separator();
-        S1.setBounds(5, 56, 261, 14);
-        P1.add(S1);
-        panel.add(P1,gbc);
-        
-        gbc.gridx = 0;	gbc.gridy = 3;
-        JPanel P2 = new JPanel();
-        P2.setOpaque(false);
-        P2.setLayout(null);
-        P2.setPreferredSize(new Dimension(280,60));
-        JLabel l2 = new JLabel("Cantidad disponible");
-        l2.setForeground(Color.WHITE);
-        l2.setBounds(5, 0, 212, 25);
-        P2.add(l2);
-        txtCantidadDis = new txt();
-        txtCantidadDis.setText("20");
-        txtCantidadDis.setEditable(false);
-        txtCantidadDis.setBounds(5, 26, 261, 28);
-        P2.add(txtCantidadDis);
-        Separator S2 = new Separator();
-        S2.setBounds(5, 56, 261, 14);
-        P2.add(S2);
-        panel.add(P2,gbc);
-        
-        gbc.gridx = 0;	gbc.gridy = 4;
-        JPanel P3 = new JPanel();
-        P3.setOpaque(false);
-        P3.setLayout(null);
-        P3.setPreferredSize(new Dimension(280,60));
-        JLabel l3 = new JLabel("Seleccione cantidad");
-        l3.setForeground(Color.WHITE);
-        l3.setBounds(5, 0, 212, 25);
-        P3.add(l3);
-        txtCantidadSel = new txt();
-        txtCantidadSel.setBounds(5, 26, 261, 28);
-        txtCantidadSel.addKeyListener(TA);
-        P3.add(txtCantidadSel);
-        Separator S3 = new Separator();
-        S3.setBounds(5, 56, 261, 14);
-        P3.add(S3);
-        panel.add(P3,gbc);
-        
-        gbc.insets = new Insets(45,0,5,0);
-        
-        // JPanel Contenedor de botones
-           gbc.gridx = 0;	gbc.gridy = 5;
-           JPanel PCB = new JPanel();
-           //PCB.setPreferredSize(new Dimension(300, 50));
-           //PCB.setBounds(10,24,850, 50);
-           PCB.setOpaque(false);
-           PCB.setLayout(new FlowLayout());
-           panel.add(PCB,gbc);
-           
-           btnAgregar = new Botones("Agregar");
-           //btnAgregar.setEnabled(false);
-           btnAgregar.setPreferredSize(new java.awt.Dimension(90, 35));
-           btnAgregar.addActionListener(BA);
-           PCB.add(btnAgregar);
-
-       		btnActualizar = new Botones("Actualizar");
-       		btnActualizar.setEnabled(false);
-       		btnActualizar.setPreferredSize(new java.awt.Dimension(90, 35));
-       		btnActualizar.addActionListener(BA);
-       		PCB.add(btnActualizar);
-
-       		btnCancelar = new Botones("Cancelar");
-       		//btnCancelar.setEnabled(false);
-       		btnCancelar.setPreferredSize(new java.awt.Dimension(90, 35));
-       		btnCancelar.addActionListener(BA);
-       		PCB.add(btnCancelar);
     }
-    
 
-
-    private void PanelCentral(){
+    public JPanel PanelCentral(){
     
-        /*---------------------------------------------------------------------*/
-        /*--------------------- Contenedor Panel Central ----------------------*/
+    	//Ancho del Panel Este y Panel Oeste.
+        int PEO = 50;
         
-        // CONSTANTES
-            //Ancho del Panel Este y Panel Oeste.
-            int PEO = 15;
-            
-            //Alto del Panel Norte y Panel Sur.
-            int PNS = 140;
-            
-        panelCentral = new JPanel();
-        //panelCentral.setBackground(new Color(52, 73, 94));
-        panelCentral.setLayout(new BorderLayout());
-        
-        JPanel PN = new JPanel();
-        PN.setLayout(new BorderLayout());
-        PN.setBackground(new Color(52, 73, 94));
-        dimension(0,PNS,PN);
-            labelTitulo2 = new labelTitulos("Materiales Seleccionados");
-            labelTitulo2.setBounds(23, 47, 295, 25);
-            panelCentral.add(labelTitulo2);
-        panelCentral.add(PN,BorderLayout.NORTH);
-        
-        JPanel PN1 = new JPanel();
-        PN1.setOpaque(false);
-        PN1.setPreferredSize(new Dimension(0, 60));
-        /*buscar = new labelForm("Buscar por nombre: ");
-        PN1.add(buscar);
-        txtBuscar = new txt();
-        txtBuscar.addKeyListener(CT);
-		txtBuscar.setPreferredSize(new Dimension(250, 28));
-		PN1.add(txtBuscar);*/
-		btnBuscar = new Botones("<---  Actualizar combo obras");
-		btnBuscar.setPreferredSize(new Dimension(285, 35));
-        btnBuscar.addActionListener(BA);
-		PN1.add(btnBuscar);
-        PN.add(PN1, BorderLayout.SOUTH);
+    	panelCentral = new JPanel();
+    	panelCentral.setBackground(new Color(52, 73, 94));
+    	panelCentral.setLayout(new GridLayout(0,1));
         
         
-        JPanel PO = new JPanel();
-        PO.setBackground(new Color(52, 73, 94));
+        /* Panel en donde se encuentra la tabla de materiales. */
+        
+    	panelNorte = new JPanel();
+    	panelNorte.setOpaque(false);
+        panelNorte.setLayout(new BorderLayout());
+        panelCentral.add(panelNorte);
+        JPanel norteNorte  = new JPanel();
+        norteNorte.setBackground(new Color(0, 150, 136));
+        panelNorte.add(norteNorte, BorderLayout.NORTH);
+        materialesDis = new labelTitulo("Materiales Disponibles");
+        norteNorte.add(materialesDis);
+        
+        PO = new JPanel();
+        PO.setOpaque(false);
         dimension(PEO,0,PO);
-        panelCentral.add(PO,BorderLayout.WEST);
-        
-        
-        PanelInicio PC = new PanelInicio();
-        PC.setLayout(new BorderLayout());
-        
-            PC.add(Creandotabla());
-            
-        panelCentral.add(PC);
-        
-        
-        JPanel PE = new JPanel();
+        panelNorte.add(PO,BorderLayout.WEST);
+        JPanel norteCentro = new JPanel();
+        norteCentro.setLayout(new BorderLayout());
+        norteCentro.setOpaque(false);
+        panelNorte.add(norteCentro, BorderLayout.CENTER);
+        // Agregando la Tabla Materiales al panel norteCentro.
+	    norteCentro.add(creandoTablaMat());
+	    PE = new JPanel();
         PE.setBackground(new Color(52, 73, 94));
         dimension(PEO,0,PE);
-        panelCentral.add(PE,BorderLayout.EAST);
+        panelNorte.add(PE,BorderLayout.EAST);
+	        
+        
+	    JPanel norteSur    = new JPanel();
+	    norteSur.setLayout(new FlowLayout());
+        norteSur.setOpaque(false);
+        panelNorte.add(norteSur, BorderLayout.SOUTH);
+        selecCantidad  = new labelForm("Seleccionar cantidad: ");
+        norteSur.add(selecCantidad);
+        txtCantidadSel = new txt();
+        txtCantidadSel.setText("0");
+        txtCantidadSel.setPreferredSize(new Dimension(1, 25));
+        norteSur.add(txtCantidadSel);
+        btnAgregar = new Botones("Agregar");
+        //btnAgregar.setEnabled(false);
+        btnAgregar.setPreferredSize(new java.awt.Dimension(90, 30));
+        norteSur.add(btnAgregar);
         
         
-        JPanel PS = new JPanel();
-        PS.setLayout(null);
-        PS.setBackground(new Color(52, 73, 94));
-        dimension(0,PNS,PS);
         
-            // JPanel Contenedor de botones
-            JPanel PCB = new JPanel();
-            PCB.setBounds(10,24,850, 50);
-            PCB.setOpaque(false);
-            PCB.setLayout(new FlowLayout(FlowLayout.LEFT));
-            
-                btnEditarSelect = new Botones("Editar selección");
-                //btnEditarSelect.setEnabled(false);
-                btnEditarSelect.setPreferredSize(new java.awt.Dimension(195, 35));
-                btnEditarSelect.addActionListener(BA);
-                PCB.add(btnEditarSelect);
-
-                btnEliminarSelect = new Botones("Eliminar selección");
-                //btnEliminarSelect.setEnabled(false);
-                btnEliminarSelect.setPreferredSize(new java.awt.Dimension(195, 35));
-                btnEliminarSelect.addActionListener(BA);
-                PCB.add(btnEliminarSelect);
-
-                btnProcesarSelect = new Botones("Procesar asignación");
-                //btnProcesarSelect.setEnabled(false);
-                btnProcesarSelect.setPreferredSize(new java.awt.Dimension(195, 35));
-                btnProcesarSelect.addActionListener(BA);
-                PCB.add(btnProcesarSelect);
-            PS.add(PCB);
-        panelCentral.add(PS,BorderLayout.SOUTH);
+        /* Panel en donde se encuentra la tabla de asignaciones. */
+        
+        
+        panelSur = new JPanel();
+        panelSur.setOpaque(false);
+        panelSur.setLayout(new BorderLayout());
+        panelCentral.add(panelSur);
+        JPanel surNorte  = new JPanel();
+        surNorte.setLayout(new BorderLayout());
+        surNorte.setBackground(new Color(0, 150, 136));
+        panelSur.add(surNorte, BorderLayout.NORTH);
+        
+        
+        JPanel surNorteOeste  = new JPanel();
+        surNorteOeste.setOpaque(false);
+        surNorte.add(surNorteOeste, BorderLayout.WEST);
+        asignarMat = new labelTitulo("      Materiales Seleccionados");
+        surNorteOeste.add(asignarMat);
+        JPanel surNorteEste  = new JPanel();
+        surNorteEste.setOpaque(false);
+        surNorte.add(surNorteEste, BorderLayout.EAST);
+        JLabel obraSelec  = new JLabel("Obra 1");
+        surNorteEste.add(obraSelec,BorderLayout.WEST);
+        JLabel fechaSelec = new JLabel("26/05/17");
+        surNorteEste.add(fechaSelec,BorderLayout.EAST);
+        
+        PO = new JPanel();
+        PO.setBackground(new Color(52, 73, 94));
+        dimension(PEO,0,PO);
+        panelSur.add(PO,BorderLayout.WEST);
+        JPanel surCentro = new JPanel();
+        surCentro.setLayout(new BorderLayout());
+        surCentro.setBackground(new Color(76, 175, 80));
+        panelSur.add(surCentro, BorderLayout.CENTER);
+        // Agregando la Tabla Asignaciones al panel surCentro.
+        surCentro.add(creandoTablaAsig());
+        PE = new JPanel();
+        PE.setOpaque(false);
+        dimension(PEO,0,PE);
+        panelSur.add(PE,BorderLayout.EAST);
+        
+        
+        JPanel surSur    = new JPanel();
+        surSur.setOpaque(false);
+        panelSur.add(surSur, BorderLayout.SOUTH);
+        btnEliminarSelect = new Botones("Eliminar selección");
+        //btnEliminarSelect.setEnabled(false);
+        btnEliminarSelect.setPreferredSize(new java.awt.Dimension(195, 35));
+        surSur.add(btnEliminarSelect);
+        btnProcesarSelect = new Botones("Procesar asignación");
+        //btnProcesarSelect.setEnabled(false);
+        btnProcesarSelect.setPreferredSize(new java.awt.Dimension(195, 35));
+        surSur.add(btnProcesarSelect);
+        
+    	return panelCentral;
     }
-
+ 
+    private void control() {
+		
+    	this.btnAgregar.addActionListener(BA);
+    	btnEliminarSelect.addActionListener(BA);
+    	btnProcesarSelect.addActionListener(BA);
+    	
+    	this.txtCantidadSel.addKeyListener(TA);
+	}    
+    
     public AsignarDTO ObtenerDatos() {
     	
     	return new AsignarDTO(
@@ -367,7 +295,6 @@ public class PanelAsignar extends JPanel{
     			this.comboObra.getSelectedItem().toString(),
     			this.obtenerFecha(),
     			this.txtNombreMat.getText(),
-    			Integer.parseInt(this.txtCantidadDis.getText()),
     			Integer.parseInt(this.txtCantidadSel.getText()));
     }
     
@@ -381,158 +308,133 @@ public class PanelAsignar extends JPanel{
     	
     	return fecha;
 	}
-    
-   public void llenarFormulario(String[] datosTabla ) {
-    	
-    	this.txtNombreMat.setText(datosTabla[0]);
-    	this.txtCantidadSel.setText(datosTabla[1]);
-    }
 
     public void removerSeleccion(int filaSeleccionada) {
     	
-    	this.modeloTabla.removeRow(filaSeleccionada);
+    	this.modeloTablaAsig.removeRow(filaSeleccionada);
     }
     
-    public void llenarTabla(Object [] datos) {
+    public void llenarTablaMat(Object [] datos) {
     	
-    	this.modeloTabla.addRow(datos);
+    	this.modeloTablaMat.addRow(datos);
     } 
-    
-    
+
+    public void llenarTablaAsig(Object [] datos) {
+    	
+    	this.modeloTablaAsig.addRow(datos);
+    } 
     
     public void limpiar() {
 		
     	comboObra.setSelectedItem(0);
     	//comboFecha.set
     	this.txtNombreMat.setText("");
-    	this.txtCantidadDis.setText("");
     	this.txtCantidadSel.setText("");
 	}
     
-    public void llenar_comboObra(String item) {
+    public void llenarComboObra(String item) {
 		
     	comboObra.addItem(item);
 	}
-    
+
     public void vaciar_comboObra() {
 		
     	comboObra.removeAllItems();
 	}
     
-    
-    public DefaultTableModel getModeloTabla() {
-        return modeloTabla;
-    }
-
-    public void setModeloTabla(DefaultTableModel modeloTabla) {
-        this.modeloTabla = modeloTabla;
-    }
-
-    public JTable getTablaSeleccionados() {
-        return tablaSeleccionados;
-    }
-
-    public void setTablaSeleccionados(JTable tablaSeleccionados) {
-        this.tablaSeleccionados = tablaSeleccionados;
-    }
-
-    public txt getTxtNombreMat() {
-        return txtNombreMat;
-    }
-
-    public void setTxtNombreMat(txt txtNombreMat) {
-        this.txtNombreMat = txtNombreMat;
-    }
-
-    public txt getTxtCodigoMat() {
-        return txtCodigoMat;
-    }
-
-    public void setTxtCodigoMat(txt txtCodigoMat) {
-        this.txtCodigoMat = txtCodigoMat;
-    }
-
-    public txt getTxtCantidadDis() {
-        return txtCantidadDis;
-    }
-
-    public void setTxtCantidadDis(txt txtCantidadDis) {
-        this.txtCantidadDis = txtCantidadDis;
-    }
-
-    public txt getTxtCantidadSel() {
-        return txtCantidadSel;
-    }
-
-    public void setTxtCantidadSelxtSelectCant(txt txtSelectCant) {
-        this.txtCantidadSel = txtSelectCant;
-    }
-
-    public labelTitulos getLabelTitulo1() {
-        return labelTitulo1;
-    }
-
-    public void setLabelTitulo1(labelTitulos labelTitulo1) {
-        this.labelTitulo1 = labelTitulo1;
-    }
-
-    public Botones getBtnBuscar() {
-        return btnBuscar;
-    }
-
-    public void setBtnBuscar(Botones btnBuscar) {
-        this.btnBuscar = btnBuscar;
-    }
-
-    public Botones getBtnLimpiar() {
-        return btnLimpiar;
-    }
-
-    public void setBtnLimpiar(Botones btnLimpiar) {
-        this.btnLimpiar = btnLimpiar;
-    }
-
-    public Botones getBtnAgregar() {
-        return btnAgregar;
-    }
-
-    public void setBtnAgregar(Botones btnAgregar) {
-        this.btnAgregar = btnAgregar;
-    }
-
-    public Botones getBtnEditarSelect() {
-        return btnEditarSelect;
-    }
-
-    public void setBtnEditarSelect(Botones btnEditarSelect) {
-        this.btnEditarSelect = btnEditarSelect;
-    }
-
-    public Botones getBtnEliminarSelect() {
-        return btnEliminarSelect;
-    }
-
-    public void setBtnEliminarSelect(Botones btnEliminarSelect) {
-        this.btnEliminarSelect = btnEliminarSelect;
-    }
-
-    public Botones getBtnProcesarSelect() {
-        return btnProcesarSelect;
-    }
-
-    public void setBtnProcesarSelect(Botones btnProcesarSelect) {
-        this.btnProcesarSelect = btnProcesarSelect;
-    }
-
-    public Botones getBtnActualizar() {
-        return btnActualizar;
-    }
-
-    public void setBtnActualizar(Botones btnActualizar) {
-        this.btnActualizar = btnActualizar;
+    private void dimension(int x, int y, JPanel p){
+        
+        Dimension panelD= new Dimension(x,y);
+        p.setPreferredSize(panelD);
+        p.setMaximumSize(panelD);
     }
     
-    public Botones getBtnCancelar() {
+    public JScrollPane creandoTablaMat(){
+    
+        modeloTablaMat  = new DefaultTableModel(datosMat,columnMat);
+        scrollTablaMat  = new JScrollPane();
+        tablaMateriales = new JTable();
+        tablaMateriales.getTableHeader().setFont(new Font ("Acme", 0,16));
+        tablaMateriales.setModel(modeloTablaMat);
+        scrollTablaMat.setViewportView(tablaMateriales);
+        
+        return scrollTablaMat;
+    }
+    
+    public JScrollPane creandoTablaAsig(){
+        
+        modeloTablaAsig    = new DefaultTableModel(datosAsig,columnAsig);
+        scrollTablaAsig    = new JScrollPane();
+        tablaSeleccionados = new JTable();
+        tablaSeleccionados.getTableHeader().setFont(new Font ("Acme", 0,16));
+        tablaSeleccionados.setModel(modeloTablaAsig);
+        scrollTablaAsig.setViewportView(tablaSeleccionados);
+        
+        setOcultarColumnasJTable(tablaSeleccionados,new int[]{0,3});
+        
+        return scrollTablaAsig;
+    }
+    
+    private void setOcultarColumnasJTable(JTable tbl, int columna[]) {
+        
+    	for(int i=0;i<columna.length;i++)
+        {
+             tbl.getColumnModel().getColumn(columna[i]).setMaxWidth(0);
+             tbl.getColumnModel().getColumn(columna[i]).setMinWidth(0);
+             tbl.getTableHeader().getColumnModel().getColumn(columna[i]).setMaxWidth(0);
+             tbl.getTableHeader().getColumnModel().getColumn(columna[i]).setMinWidth(0);
+        }
+    }
+    
+	public DefaultTableModel getModeloTablaMat() {
+		return modeloTablaMat;
+	}
+
+	public void setModeloTablaMat(DefaultTableModel modeloTablaMat) {
+		this.modeloTablaMat = modeloTablaMat;
+	}
+
+	public DefaultTableModel getModeloTablaAsig() {
+		return modeloTablaAsig;
+	}
+
+	public void setModeloTablaAsig(DefaultTableModel modeloTablaAsig) {
+		this.modeloTablaAsig = modeloTablaAsig;
+	}
+
+	public JTable getTablaSeleccionados() {
+		return tablaSeleccionados;
+	}
+
+	public void setTablaSeleccionados(JTable tablaSeleccionados) {
+		this.tablaSeleccionados = tablaSeleccionados;
+	}
+
+	public JTable getTablaMateriales() {
+		return tablaMateriales;
+	}
+
+	public void setTablaMateriales(JTable tablaMateriales) {
+		this.tablaMateriales = tablaMateriales;
+	}
+
+	public Botones getBtnAgregar() {
+		return btnAgregar;
+	}
+
+	public void setBtnAgregar(Botones btnAgregar) {
+		this.btnAgregar = btnAgregar;
+	}
+
+	public Botones getBtnActualizar() {
+		return btnActualizar;
+	}
+
+	public void setBtnActualizar(Botones btnActualizar) {
+		this.btnActualizar = btnActualizar;
+	}
+
+	public Botones getBtnCancelar() {
 		return btnCancelar;
 	}
 
@@ -540,13 +442,20 @@ public class PanelAsignar extends JPanel{
 		this.btnCancelar = btnCancelar;
 	}
 
-
-	public JDateChooser getComboFecha() {
-		return comboFecha;
+	public Botones getBtnEliminarSelect() {
+		return btnEliminarSelect;
 	}
 
-	public void setComboFecha(JDateChooser comboFecha) {
-		this.comboFecha = comboFecha;
+	public void setBtnEliminarSelect(Botones btnEliminarSelect) {
+		this.btnEliminarSelect = btnEliminarSelect;
+	}
+
+	public Botones getBtnProcesarSelect() {
+		return btnProcesarSelect;
+	}
+
+	public void setBtnProcesarSelect(Botones btnProcesarSelect) {
+		this.btnProcesarSelect = btnProcesarSelect;
 	}
 
 	public JComboBox getComboObra() {
@@ -557,15 +466,25 @@ public class PanelAsignar extends JPanel{
 		this.comboObra = comboObra;
 	}
 
+	public txt getTxtCantidadSel() {
+		return txtCantidadSel;
+	}
+
+	public void setTxtCantidadSel(txt txtCantidadSel) {
+		this.txtCantidadSel = txtCantidadSel;
+	}
+
 	public static void main(String args[]) {
-		JFrame frame = new JFrame("Probando panel individual...");
-		frame.setLayout(new GridLayout());
+		
 		PanelAsignar PA = new PanelAsignar();
+		
+		JFrame frame    = new JFrame("Probando panel individual...");
+		frame.setLayout(new GridLayout());
 		frame.add(PA);
-		frame.getContentPane().setBackground(Color.WHITE);
-		frame.setBackground(Color.WHITE);
 		frame.setSize(1300, 650);
+		frame.setBackground(Color.WHITE);
 		frame.setLocationRelativeTo(null);
+		frame.getContentPane().setBackground(Color.WHITE);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
 	}

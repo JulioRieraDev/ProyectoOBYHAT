@@ -28,7 +28,7 @@ import com.obyhat.modelo.dto.ObrasDTO;
 import com.obyhat.resources.components.Botones;
 import com.obyhat.resources.components.Separator;
 import com.obyhat.resources.components.labelForm;
-import com.obyhat.resources.components.labelTitulos;
+import com.obyhat.resources.components.labelTitulo;
 import com.obyhat.resources.components.txt;
 
 /**
@@ -48,7 +48,7 @@ public class PanelCategorias extends JPanel{
     private labelForm labelNombreCat,labelDesCateg;
     private txt txtCategoria;
     private Separator separatorNom,separatorDes;
-    private labelTitulos labelTitulo1,labelTitulo2;
+    private labelTitulo labelTitulo1,labelTitulo2;
     private Botones btnAgregar,btnModificar,btnEliminar,btnActualizar, btnCancelar,btnBuscar;
     private JTextArea txtDesCategoria;
     
@@ -121,7 +121,7 @@ public class PanelCategorias extends JPanel{
         panelIzquierdo.setLayout(null);
         panelIzquierdo.setBorder(new LineBorder(new Color(42, 59, 80),3,true));
         
-                labelTitulo1 = new labelTitulos("Registrar Categoria");
+                labelTitulo1 = new labelTitulo("Registrar Categoria");
 		labelTitulo1.setBounds(23, 47, 245, 25);
 		panelIzquierdo.add(labelTitulo1);
                 
@@ -199,7 +199,7 @@ public class PanelCategorias extends JPanel{
         PN.setLayout(new BorderLayout());
         PN.setBackground(new Color(52, 73, 94));
         dimension(0,PNS,PN);
-        labelTitulo2 = new labelTitulos("Categorias Registradas");
+        labelTitulo2 = new labelTitulo("Categorias Registradas");
         labelTitulo2.setBounds(23, 47, 295, 25);
         panelCentral.add(labelTitulo2);
         panelCentral.add(PN,BorderLayout.NORTH);
@@ -319,11 +319,11 @@ public class PanelCategorias extends JPanel{
         this.txtCategoria = txtCategoria;
     }
 
-    public labelTitulos getLabelTitulo1() {
+    public labelTitulo getLabelTitulo1() {
         return labelTitulo1;
     }
 
-    public void setLabelTitulo1(labelTitulos labelTitulo1) {
+    public void setLabelTitulo1(labelTitulo labelTitulo1) {
         this.labelTitulo1 = labelTitulo1;
     }
 

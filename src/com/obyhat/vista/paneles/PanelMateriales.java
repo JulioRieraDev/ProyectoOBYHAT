@@ -9,7 +9,7 @@ import com.obyhat.controlador.BotonesMaterial;
 import com.obyhat.resources.components.txt;
 import com.obyhat.resources.components.labelForm;
 import com.obyhat.resources.components.Botones;
-import com.obyhat.resources.components.labelTitulos;
+import com.obyhat.resources.components.labelTitulo;
 
 import com.obyhat.controlador.TextoMateriales;
 import com.obyhat.modelo.dto.MaterialesDTO;
@@ -54,7 +54,7 @@ public class PanelMateriales extends JPanel{
     private labelForm lcategoriaMaterial,lnombreMaterial,lcantidadMaterial,lfechaIngreso;
     private txt txtBuscarMat,txtCantidadMat,txtCodigoMat,txtFechaIngreso,txtNombreMat;
     private Separator separatorNom,separatorEnc,separatorDir,separatorTel;
-    private labelTitulos labelTitulo1,labelTitulo2;
+    private labelTitulo labelTitulo1,labelTitulo2;
     private Botones btnAgregar,btnModificar,btnEliminar,btnBuscarMat;
     
      private javax.swing.JComboBox<String> comboCategoria;    
@@ -153,7 +153,7 @@ public class PanelMateriales extends JPanel{
         panelIzquierdo.setLayout(null);
         panelIzquierdo.setBorder(new LineBorder(new Color(42, 59, 80),3,true));
         
-                labelTitulo1 = new labelTitulos("Registrar Materiales");
+                labelTitulo1 = new labelTitulo("Registrar Materiales");
 		labelTitulo1.setBounds(23, 20, 245, 25);
 		panelIzquierdo.add(labelTitulo1);
                 
@@ -243,7 +243,7 @@ public class PanelMateriales extends JPanel{
         JPanel PN = new JPanel();
         PN.setBackground(new Color(52, 73, 94));
         dimension(0,PNS,PN);
-            labelTitulo2 = new labelTitulos("Buscar material");
+            labelTitulo2 = new labelTitulo("Buscar material");
             labelTitulo2.setBounds(23, 47, 245, 25);
             panelCentral.add(labelTitulo2);
         panelCentral.add(PN,BorderLayout.NORTH);

@@ -16,13 +16,14 @@ import com.obyhat.vista.paneles.SeleccionarObra;
 public class BotonesSelecionarObra implements ActionListener {
 
 	private SeleccionarObra SO;
-	private PanelAsignar	PA;
+	private BotonesAsignar	BA;
 	private MaterialesDAO   materiales;
 	private String 			nombre;
 	
 	
 	public BotonesSelecionarObra(SeleccionarObra SO) {
 		
+		this.BA = BA;
 		this.SO = SO;
 		this.materiales = new MaterialesDAO();
 	}

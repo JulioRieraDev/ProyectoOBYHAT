@@ -61,9 +61,6 @@ public class Controlador implements ActionListener {
             
             System.out.println("ItemMenu Asignar Escuchando!");
             
-            this.bUsuario = new PanelAsignar();
-            bUsuario.llenar_comboObra(null);
-            
             CardLayout cl = (CardLayout)(aux.getPanelCentral().getLayout());
 			    cl.show(aux.getPanelCentral(), aux.VENTANA2);
         }

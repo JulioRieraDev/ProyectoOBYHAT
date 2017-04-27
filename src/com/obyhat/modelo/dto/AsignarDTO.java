@@ -13,10 +13,10 @@ public class AsignarDTO {
 	
 	
 	
-	public AsignarDTO(String fechaAsignacion, int cantidadSeleccionada) {
+	public AsignarDTO(String nombreMaterial, int cantidadDisponible) {
 		
-		this.fechaAsignacion = fechaAsignacion;
-		this.cantidadSeleccionada = cantidadSeleccionada;
+		this.nombreMaterial = nombreMaterial;
+		this.cantidadSeleccionada = cantidadDisponible;
 	}
 
 
@@ -28,13 +28,12 @@ public class AsignarDTO {
 	}
 
 	
-	public AsignarDTO(String obra, String fechaAsignacion, String nombreMaterial, int cantidadDisponible,
+	public AsignarDTO(String obra, String fechaAsignacion, String nombreMaterial,
 			int cantidadSeleccionada) {
 		
 		this.obra = obra;
 		this.fechaAsignacion = fechaAsignacion;
 		this.nombreMaterial = nombreMaterial;
-		this.cantidadDisponible = cantidadDisponible;
 		this.cantidadSeleccionada = cantidadSeleccionada;
 	}
 

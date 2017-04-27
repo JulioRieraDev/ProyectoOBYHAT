@@ -37,7 +37,7 @@ import com.obyhat.modelo.dto.UsuarioDTO;
 import com.obyhat.resources.components.Botones;
 import com.obyhat.resources.components.Separator;
 import com.obyhat.resources.components.labelForm;
-import com.obyhat.resources.components.labelTitulos;
+import com.obyhat.resources.components.labelTitulo;
 import com.obyhat.resources.components.txt;
 
 /**
@@ -59,7 +59,7 @@ public class PanelUsuarios extends JPanel{
     private txt txtNombreUsuario;
     private JPasswordField txtContrasena;
     private Separator separatorNom,separatorCod,separatorDis,separatorSel;
-    private labelTitulos labelTitulo1,labelTitulo2;
+    private labelTitulo labelTitulo1,labelTitulo2;
     private Botones btnEliminar,btnAgregar, btnModificar,btnActualizar,btnCancelar, btnBuscar;
     private JComboBox comboUsuario;
     DefaultComboBoxModel modeloCombo = new DefaultComboBoxModel();
@@ -142,7 +142,7 @@ public class PanelUsuarios extends JPanel{
         panel1.setLayout(new FlowLayout(FlowLayout.LEFT));
         panelIzquierdo.add(panel1, BorderLayout.NORTH);
         
-        labelTitulos l1 = new labelTitulos("  Registrar usuarios");
+        labelTitulo l1 = new labelTitulo("  Registrar usuarios");
         panel1.add(l1);
         
         JPanel panel = new JPanel();
@@ -255,7 +255,7 @@ public class PanelUsuarios extends JPanel{
         PN.setLayout(new BorderLayout());
         PN.setBackground(new Color(52, 73, 94));
         dimension(0,PNS,PN);
-            labelTitulo2 = new labelTitulos("Usuarios Registrados");
+            labelTitulo2 = new labelTitulo("Usuarios Registrados");
             labelTitulo2.setBounds(23, 47, 295, 25);
             panelCentral.add(labelTitulo2);
         panelCentral.add(PN,BorderLayout.NORTH);

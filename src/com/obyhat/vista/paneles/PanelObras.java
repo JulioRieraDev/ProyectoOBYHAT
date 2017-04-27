@@ -56,7 +56,7 @@ public class PanelObras extends JPanel{
     private txt txtNombreObra,txtEncargadoObra,txtDireccionObra,txtTelefonoObra,
             txtBuscar;
     private Separator separatorNom,separatorEnc,separatorDir,separatorTel;
-    private labelTitulos labelTitulo1,labelTitulo2;
+    private labelTitulo labelTitulo1,labelTitulo2;
     private Botones btnAgregar,btnModificar,btnEliminar,btnBuscar,btnAsignaciones,btnCancelar,btnActualizar;
     
     private TextAutoCompleter autoCompletar;
@@ -101,7 +101,7 @@ public class PanelObras extends JPanel{
         panelIzquierdo.setLayout(null);
         panelIzquierdo.setBorder(new LineBorder(new Color(42, 59, 80),3,true));
         
-                labelTitulo1 = new labelTitulos("Registrar Obras");
+                labelTitulo1 = new labelTitulo("Registrar Obras");
 		labelTitulo1.setBounds(23, 47, 245, 25);
 		panelIzquierdo.add(labelTitulo1);
                 
@@ -197,7 +197,7 @@ public class PanelObras extends JPanel{
         PN.setLayout(new BorderLayout());
         PN.setBackground(new Color(52, 73, 94));
         dimension(0,PNS,PN);
-            labelTitulo2 = new labelTitulos("Obras Registradas");
+            labelTitulo2 = new labelTitulo("Obras Registradas");
             labelTitulo2.setBounds(23, 47, 245, 25);
             panelCentral.add(labelTitulo2);
         
