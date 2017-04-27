@@ -4,19 +4,21 @@ import java.sql.Date;
 
 public class AsignarDTO {
 
-	private int 	idOrdenSalidad;
+	private int 	idAsignacion;
 	private String  obra;
+	private int     idObra;
 	private String 	fechaAsignacion;
 	private String 	nombreMaterial;
+	private int     idMaterial;
 	private int 	cantidadDisponible;
 	private int 	cantidadSeleccionada;
 	
 	
 	
-	public AsignarDTO(String nombreMaterial, int cantidadDisponible) {
+	public AsignarDTO(int idObra, String fechaAsignacion) {
 		
-		this.nombreMaterial = nombreMaterial;
-		this.cantidadSeleccionada = cantidadDisponible;
+		this.idObra = idObra;
+		this.fechaAsignacion = fechaAsignacion;
 	}
 
 
@@ -28,6 +30,14 @@ public class AsignarDTO {
 	}
 
 	
+	public AsignarDTO(int cantidadSeleccionada, int idMaterial, int idAsignacion) {
+		
+		this.idAsignacion = idAsignacion;
+		this.idMaterial = idMaterial;
+		this.cantidadSeleccionada = cantidadSeleccionada;
+	}
+
+
 	public AsignarDTO(String obra, String fechaAsignacion, String nombreMaterial,
 			int cantidadSeleccionada) {
 		
@@ -41,7 +51,7 @@ public class AsignarDTO {
 	public AsignarDTO(int idOrdenSalidad, String obra, String fechaAsignacion, String nombreMaterial,
 			int cantidadDisponible, int cantidadSeleccionada) {
 		
-		this.idOrdenSalidad = idOrdenSalidad;
+		this.idAsignacion = idOrdenSalidad;
 		this.obra = obra;
 		this.fechaAsignacion = fechaAsignacion;
 		this.nombreMaterial = nombreMaterial;
@@ -52,7 +62,7 @@ public class AsignarDTO {
 	public final Object[] toArray(){
         Object[] datos = new Object[5];
         
-        //datos[0] = this.idOrdenSalidad;
+        //datos[0] = this.idAsignacion;
         datos[0] = this.obra;
         datos[1] = this.fechaAsignacion;
         datos[2] = this.nombreMaterial;
@@ -62,13 +72,13 @@ public class AsignarDTO {
         return datos;
     }
 
-	public int getIdOrdenSalidad() {
-		return idOrdenSalidad;
+	public int getIdAsignacion() {
+		return idAsignacion;
 	}
 
 
-	public void setIdOrdenSalidad(int idOrdenSalidad) {
-		this.idOrdenSalidad = idOrdenSalidad;
+	public void setIdAsignacion(int idAsignacion) {
+		this.idAsignacion = idAsignacion;
 	}
 
 
@@ -119,4 +129,25 @@ public class AsignarDTO {
 	public void setCantidadSeleccionada(int cantidadSeleccionada) {
 		this.cantidadSeleccionada = cantidadSeleccionada;
 	}
+
+
+	public int getIdObra() {
+		return idObra;
+	}
+
+
+	public void setIdObra(int idObra) {
+		this.idObra = idObra;
+	}
+
+
+	public int getIdMaterial() {
+		return idMaterial;
+	}
+
+
+	public void setIdMaterial(int idMaterial) {
+		this.idMaterial = idMaterial;
+	}
+	
 }

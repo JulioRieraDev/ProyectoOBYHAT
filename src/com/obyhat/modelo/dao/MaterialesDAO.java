@@ -94,7 +94,7 @@ public class MaterialesDAO implements CRUD<MaterialesDTO>{
 				
 				while (res.next()) {
 					
-					materiales.add(new MaterialesDTO(res.getString(2),res.getInt(3)));
+					materiales.add(new MaterialesDTO(res.getInt(1),res.getString(2),res.getInt(3)));
 				}
 	                        
 	                        

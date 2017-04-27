@@ -33,7 +33,14 @@ public class MaterialesDTO {
                 
 	}
     
-    public MaterialesDTO(String nombreMaterial,int Existencia,int ExistenciaMin,int ExistenciaMax,int cantidadMaterial,String fechaRegistro) {
+    public MaterialesDTO(int idMaterial, String nombreMaterial, int cantidadMaterial) {
+		
+		this.idMaterial = idMaterial;
+		this.nombreMaterial = nombreMaterial;
+		this.cantidadMaterial = cantidadMaterial;
+	}
+
+	public MaterialesDTO(String nombreMaterial,int Existencia,int ExistenciaMin,int ExistenciaMax,int cantidadMaterial,String fechaRegistro) {
 		
 		this.nombreMaterial = nombreMaterial;             
                 this.Existencia=Existencia;
@@ -71,13 +78,13 @@ public class MaterialesDTO {
     public final Object[] toArray(){
             Object[] datos = new Object[5];
             
-            //datos[0] = this.idObra;
-            datos[0] = this.nombreMaterial;         
-            datos[1] = this.Existencia;
-            datos[2] = this.ExistenciaMin;
-            datos[3] = this.ExistenciaMax;
-            datos[4] = this.cantidadMaterial;
-            datos[5]=this.fechaRegistro;
+            datos[0] = this.idMaterial;
+            datos[1] = this.nombreMaterial;         
+            datos[2] = this.Existencia;
+            //datos[3] = this.ExistenciaMin;
+            //datos[4] = this.ExistenciaMax;
+            //datos[5] = this.cantidadMaterial;
+            //datos[6]=this.fechaRegistro;
             
             
             return datos;

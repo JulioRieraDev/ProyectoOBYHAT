@@ -15,11 +15,14 @@ import com.obyhat.modelo.dto.CategoriaDTO;
 
 public class AsignarDAO implements CRUD<AsignarDTO>{
 
-	private static final String SQL_INSERT = "INSERT INTO asignar (fechaAsignacion, cantidad) VALUES (?,?)";
-	private static final String SQL_DELETE = "DELETE FROM asignar WHERE idOrdenSalida = ?";
-	private static final String SQL_UPDATE = "UPDATE asignar SET idOrdenSalida = ?, fechaAsignacion = ?, cantidad = ? WHERE idOrdenSalida = ?";
-	private static final String SQL_READ   = "SELECT fechaAsignacion, cantidad FROM asignar WHERE idOrdenSalida = ?";
-	private static final String SQL_READALL= "SELECT fechaAsignacion, cantidad FROM asignar";
+	private static final String SQL_INSERT    = "INSERT INTO asignar (fechaAsignacion, idObra) VALUES (?,?)";
+	private static final String SQL_DELETE    = "DELETE FROM asignar WHERE idOrdenSalida = ?";
+	private static final String SQL_UPDATE    = "UPDATE asignar SET idOrdenSalida = ?, fechaAsignacion = ?, cantidad = ? WHERE idOrdenSalida = ?";
+	private static final String SQL_READ      = "SELECT fechaAsignacion, cantidad FROM asignar WHERE idOrdenSalida = ?";
+	private static final String SQL_READALL   = "SELECT fechaAsignacion, cantidad FROM asignar";
+	private static final String SQL_READLAST  = "SELECT idAsignacion FROM asignar ORDER BY idAsignacion DESC LIMIT 1";
+	private static final String SQL_INSERTDET = "INSERT INTO detalleAsignar (cantidad, idMaterial, idAsignacion) VALUES (?, ?, ?)";
+	
 	
 	private static final Conexion miConexion = Conexion.saberEstado();
 	private PreparedStatement pStatement;
@@ -34,7 +37,7 @@ public class AsignarDAO implements CRUD<AsignarDTO>{
 			// Los numeros representan mis signos de interrogacion.
 			pStatement = miConexion.obtenerConexion().prepareStatement(SQL_INSERT);
 			pStatement.setString(1, datos.getFechaAsignacion());
-			pStatement.setInt(	 2, datos.getCantidadSeleccionada());
+			pStatement.setInt(   2, datos.getIdObra());
 			
 			// Retornar el valor boolean si esto se ejecuto.
 			if (pStatement.executeUpdate() > 0) {
@@ -58,6 +61,37 @@ public class AsignarDAO implements CRUD<AsignarDTO>{
 		return false;
 	}
 	
+	public boolean insertarDetalles(AsignarDTO datos) {
+
+		try {
+			
+			// Los numeros representan mis signos de interrogacion.
+			pStatement = miConexion.obtenerConexion().prepareStatement(SQL_INSERTDET);
+			pStatement.setInt(1, datos.getCantidadSeleccionada());
+			pStatement.setInt(2, datos.getIdMaterial());
+			pStatement.setInt(3, datos.getIdAsignacion());
+			
+			// Retornar el valor boolean si esto se ejecuto.
+			if (pStatement.executeUpdate() > 0) {
+				
+				//JOptionPane.showMessageDialog(null, "Usuario registrado exitosamente", null, JOptionPane.INFORMATION_MESSAGE);
+				System.out.println("Procesado exitosamente.");
+				return true;
+			}
+			
+			pStatement.close();
+			
+		} catch (SQLException e) {
+			
+			JOptionPane.showMessageDialog(null, "Error al registrar todo esto.", null, JOptionPane.INFORMATION_MESSAGE);
+			System.out.println("Error al registrar un nuev Usuario. \n"+e);
+		} finally {
+			
+			miConexion.Desconectar();
+		}
+		
+		return false;
+	}
 	
 	@Override
 	public boolean Actualizar(AsignarDTO datos) {
@@ -83,7 +117,7 @@ public class AsignarDAO implements CRUD<AsignarDTO>{
 			
 			while (res.next()) {
 				
-				asignar = new AsignarDTO(res.getString(1),res.getInt(2)); 
+				//asignar = new AsignarDTO(res.getString(1),res.getInt(2)); 
 			}
 			
 			return asignar;
@@ -97,6 +131,35 @@ public class AsignarDAO implements CRUD<AsignarDTO>{
 		
 		return asignar;
 	}
+	
+	public int obtenerUltimaAsig() {
+
+		int ultimaAsig = 0;
+		
+		try {
+			
+			pStatement = miConexion.obtenerConexion().prepareStatement(SQL_READLAST);
+			
+			res = pStatement.executeQuery();
+			
+			while (res.next()) {
+				
+				ultimaAsig = res.getInt(1); 
+			}
+			
+			return ultimaAsig;
+			
+		} catch (Exception e) {
+			
+			JOptionPane.showMessageDialog(null, "Error al intentar consultar la Categoria. \n"+e, null, JOptionPane.INFORMATION_MESSAGE);
+		} finally {
+			
+			miConexion.Desconectar();
+		}
+		
+		return ultimaAsig;
+	}
+	
 	@Override
 	public List<AsignarDTO> ConsultarTodos() {
 
@@ -110,7 +173,7 @@ public class AsignarDAO implements CRUD<AsignarDTO>{
 			
 			while (res.next()) {
 				
-				asignar.add(new AsignarDTO(res.getString(1),res.getInt(2)));
+				//asignar.add(new AsignarDTO(res.getString(1),res.getInt(2)));
 			}
                         
                         

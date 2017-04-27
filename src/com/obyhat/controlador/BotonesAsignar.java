@@ -93,12 +93,16 @@ public class BotonesAsignar implements ActionListener {
 			
 			try {
 				
-				if(filaSeleccionada >= 0 && cantidadSelec >= 1){
+				if(filaSeleccionada >= 0){
 
 		            try {
 						
-		            	JOptionPane.showMessageDialog(null, "Ha seleccionado\n Y una cantidad de "+cantidadSelec,
-								"Informacion", JOptionPane.INFORMATION_MESSAGE);
+		            	String Codigo      = this.PA.getTablaMateriales().getValueAt(filaSeleccionada, 0).toString();
+                        String nombre      = this.PA.getTablaMateriales().getValueAt(filaSeleccionada, 1).toString();
+                        String cantidadSel = this.PA.getTxtCantidadSel().getText();
+
+                        String materialesSelec[] = {null,Codigo,nombre,cantidadSel};
+                        this.PA.llenarTablaAsig(materialesSelec);
 		            	
 					} catch (Exception e2) {
 						
@@ -166,7 +170,7 @@ public class BotonesAsignar implements ActionListener {
 	           
 	            JOptionPane.showMessageDialog(null, "Error en Eventos del Boton Agregar. \n" + e1, "Error",
 	                    JOptionPane.ERROR_MESSAGE);
-	      }
+	    }
 	}
 	
 	public void eliminarSeleccion() {
@@ -197,24 +201,44 @@ public class BotonesAsignar implements ActionListener {
 		int canntidad = PA.getTablaSeleccionados().getRowCount();
 		
 		String fecha = null;
-		int cantidadSel = 0;
-		
-		try {
+		int cantidadSel,idMaterial,obra,idUltimaAsig = 0;
 			
-			for (int i = 0; i < canntidad; i++) {
+			try {
 				
-				fecha 	= PA.getTablaSeleccionados().getValueAt(i, 1).toString();
-				cantidadSel = Integer.parseInt(PA.getTablaSeleccionados().getValueAt(i, 3).toString());
+				if (ValidarDatos().equals("")) {
+					
+					obra        = PA.getComboObra().getSelectedIndex();
+					fecha 	    = PA.obtenerFecha();
+					
+					//JOptionPane.showMessageDialog(null, obra+" \n "+fecha+" \n "+idMaterial+" \n "+cantidadSel);
+					
+					asignarDAO.Ingresar(this.PA.ObtenerDatos());
+					System.out.println(asignarDAO.obtenerUltimaAsig());
+					idUltimaAsig = asignarDAO.obtenerUltimaAsig();
+					
+					for (int i = 0; i < canntidad; i++) {
+						
+						idMaterial  = Integer.parseInt(PA.getTablaSeleccionados().getValueAt(i, 1).toString());
+						cantidadSel = Integer.parseInt(PA.getTablaSeleccionados().getValueAt(i, 3).toString());
+						
+						//cantidad, idMaterial, idAsignacion
+						
+						asignarDAO.insertarDetalles(new AsignarDTO(cantidadSel, idMaterial, idUltimaAsig));
+					}
+				}
 				
-				asignarDAO.Ingresar(new AsignarDTO(fecha, cantidadSel));
+				else{
+		            
+	                JOptionPane.showMessageDialog(null, "ERROR!! \n" + ValidarDatos(), "Validando Datos",
+	                    JOptionPane.ERROR_MESSAGE);
+	            }	
+					
+			} catch (Exception e2) {
+					
+					JOptionPane.showMessageDialog(null, "Error en Eventos del Boton procesar. \n" + e2, "Error",
+		                    JOptionPane.ERROR_MESSAGE);
 			}
 			
-			JOptionPane.showMessageDialog(null, "Procesado exitosamente", null, JOptionPane.INFORMATION_MESSAGE);
-		} catch (Exception e) {
-			
-			JOptionPane.showMessageDialog(null, "Error \n"+e);
-		}
-		
 		
 	}
 	
@@ -238,8 +262,9 @@ public class BotonesAsignar implements ActionListener {
         
         for (int i = 0; i < materiales.size(); i++) {
             
-        	System.out.println(materiales.get(i).getNombreMaterial()+" - "+materiales.get(i).getCantidadMaterial());
-            this.PA.llenarTablaMat(materiales.get(i).toArrayDos());
+            this.PA.llenarTablaMat(new Object[] {materiales.get(i).getIdMaterial(),
+            									 materiales.get(i).getNombreMaterial(),
+								            	 materiales.get(i).getCantidadMaterial()});
         }
 	}
     
@@ -248,17 +273,14 @@ public class BotonesAsignar implements ActionListener {
     	String msj = "";
         
         //@Deprecated
-        if (this.PA.ObtenerDatos().getObra().equals("")) {//Si TxtNombreMat esta vacio.
-            msj += "Por favor ingrese el nombre de la obra. \n";
+        if (this.PA.getComboObra().getSelectedIndex() == 0) {//Si TxtNombreMat esta vacio.
+            msj += "Por favor seleccione una obra. \n";
         }
-        if (this.PA.ObtenerDatos().getFechaAsignacion().equals("")) {//Si TxtCodigoMat esta vacio.
-            msj += "Por favor ingrese un encargado. \n";
+        if (this.PA.obtenerFecha().equals("")) {//Si TxtCodigoMat esta vacio.
+            msj += "Por favor ingrese una fecha. \n";
         }
-        if (this.PA.ObtenerDatos().getNombreMaterial().equals("")) {//Si TxtSelectCant esta vacio.
-            msj += "Por favor ingrese un telefono de contacto. \n";
-        }
-        if (this.PA.ObtenerDatos().getCantidadSeleccionada() == 0) {//Si TxtSelectCant esta vacio.
-            msj += "Por favor ingrese la direccion de la obra. \n";
+        if (this.PA.getTablaSeleccionados().getRowCount() == 0) {//Si TxtCodigoMat esta vacio.
+            msj += "No se han elegido materiales. \n";
         }
         
         return msj;//devuelve msj.

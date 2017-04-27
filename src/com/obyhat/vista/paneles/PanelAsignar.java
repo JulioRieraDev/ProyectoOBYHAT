@@ -56,8 +56,8 @@ public class PanelAsignar extends JPanel{
     private JTable 		tablaSeleccionados,tablaMateriales;
     private String [][] datosMat   = {};
     private String [][] datosAsig  = {};
-    private String [] 	columnMat  = {"Material","Cantidad Disponible"};
-    private String [] 	columnAsig = {"Obra","Fecha","Material","Cantidad Seleccionada"};
+    private String [] 	columnMat  = {"Codigo","Material","Cantidad Disponible"};
+    private String [] 	columnAsig = {"Obra","idMaterial","Material","Cantidad Seleccionada"};
     
     //Contenedores.
     private JPanel 		panelCentral,panelIzquierdo,panelCentral2,panelNorte,panelSur,
@@ -292,21 +292,28 @@ public class PanelAsignar extends JPanel{
     	
     	return new AsignarDTO(
     			
-    			this.comboObra.getSelectedItem().toString(),
-    			this.obtenerFecha(),
-    			this.txtNombreMat.getText(),
-    			Integer.parseInt(this.txtCantidadSel.getText()));
+    			this.comboObra.getSelectedIndex()+1,
+    			this.obtenerFecha());
     }
     
     public String obtenerFecha() {
-		
-    	int year  = this.comboFecha.getCalendar().get(Calendar.YEAR);
-    	int month = this.comboFecha.getCalendar().get(Calendar.MONTH)+1;
-    	int day   = this.comboFecha.getCalendar().get(Calendar.DAY_OF_MONTH);
     	
-    	String fecha = year+"-"+month+"-"+day;
+    	String fecha = "";
     	
-    	return fecha;
+    	try {
+			
+    		int year  = this.comboFecha.getCalendar().get(Calendar.YEAR);
+        	int month = this.comboFecha.getCalendar().get(Calendar.MONTH)+1;
+        	int day   = this.comboFecha.getCalendar().get(Calendar.DAY_OF_MONTH);
+        	
+        	fecha = year+"-"+month+"-"+day;
+        	
+        	return fecha;
+        	
+		} catch (Exception e) {
+			
+			return fecha;
+		}
 	}
 
     public void removerSeleccion(int filaSeleccionada) {
@@ -358,6 +365,8 @@ public class PanelAsignar extends JPanel{
         tablaMateriales.setModel(modeloTablaMat);
         scrollTablaMat.setViewportView(tablaMateriales);
         
+        //setOcultarColumnasJTable(tablaMateriales,new int[]{0});
+        
         return scrollTablaMat;
     }
     
@@ -370,7 +379,7 @@ public class PanelAsignar extends JPanel{
         tablaSeleccionados.setModel(modeloTablaAsig);
         scrollTablaAsig.setViewportView(tablaSeleccionados);
         
-        setOcultarColumnasJTable(tablaSeleccionados,new int[]{0,3});
+        //setOcultarColumnasJTable(tablaSeleccionados,new int[]{0,3});
         
         return scrollTablaAsig;
     }
