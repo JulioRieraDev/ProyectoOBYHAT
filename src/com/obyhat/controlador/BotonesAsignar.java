@@ -25,6 +25,7 @@ import java.awt.event.ItemListener;
 import java.util.Calendar;
 import java.util.List;
 
+import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 
 /**
@@ -88,12 +89,9 @@ public class BotonesAsignar implements ActionListener, ItemListener {
 		      
 			System.out.println("Boton 'Ver Asignaciones' escuchando Rock!");
 			
-			//new HistorialAsignaciones().setVisible(true);
+			new HistorialAsignaciones().setVisible(true);
 			
-			int obra        = PA.getComboObra().getSelectedIndex();
-			String fecha 	    = PA.obtenerFecha();
-			
-			JOptionPane.showMessageDialog(null, obra+" \n "+fecha+" \n "+PA.ObtenerDatos().getObra());
+			//JOptionPane.showMessageDialog(null, PA.ObtenerDatos().getIdObra()+" \n "+PA.ObtenerDatos().getFechaAsignacion());
 		}
     }
     
@@ -267,7 +265,7 @@ public class BotonesAsignar implements ActionListener, ItemListener {
 		
 	}
 	
-	public void obtenerObras() {
+	public void obtenerObras(JComboBox<ObrasDTO> comboObra) {
 		
 		List<ObrasDTO> obras = this.miObra.ConsultarTodos();
 
@@ -275,9 +273,11 @@ public class BotonesAsignar implements ActionListener, ItemListener {
 		
 		for (int i = 0; i < obras.size(); i++) {
             System.out.println(obras.get(i).getNombreObra()+"Estoy en Asignar");
-            PA.llenarComboObra(obras.get(i).getNombreObra());
-        }
+            comboObra.addItem(new ObrasDTO(obras.get(i).getIdObra(), obras.get(i).getNombreObra().toString()));
+		}
 	}
+	
+	
 	
 	public void obtenerMateriales() {
 		
@@ -316,8 +316,8 @@ public class BotonesAsignar implements ActionListener, ItemListener {
     
     if (e.getSource() == this.PA.getComboObra()) {
 	  
-    	System.out.println(this.PA.getComboObra().getItemCount());
-    	System.out.println(this.PA.getComboObra().getSelectedIndex()); 
+    	System.out.println(this.PA.getComboObra().getItemAt(PA.getComboObra().getSelectedIndex()).getIdObra());
+    	System.out.println(this.PA.getComboObra().getItemAt(PA.getComboObra().getSelectedIndex()).getNombreObra()); 
     }
   }
 	

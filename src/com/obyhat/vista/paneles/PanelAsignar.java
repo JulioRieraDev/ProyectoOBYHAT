@@ -19,6 +19,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Date;
 import java.util.Calendar;
+import java.util.List;
 import java.util.ResourceBundle.Control;
 
 import javax.swing.DefaultComboBoxModel;
@@ -38,6 +39,7 @@ import com.obyhat.controlador.BotonesAsignar;
 import com.obyhat.controlador.TextoAsignar;
 import com.obyhat.modelo.dto.AsignarDTO;
 import com.obyhat.modelo.dto.CategoriaDTO;
+import com.obyhat.modelo.dto.ObrasDTO;
 import com.obyhat.resources.components.Botones;
 import com.obyhat.resources.components.Separator;
 import com.obyhat.resources.components.labelForm;
@@ -72,7 +74,7 @@ public class PanelAsignar extends JPanel{
     private Botones 	btnAgregar,btnActualizar,btnCancelar,btnEliminarSelect,
     					btnProcesarSelect, btnVerAsignaciones;
     
-    private JComboBox 	comboObra;
+    private JComboBox <ObrasDTO>	comboObra;
     // Elegir fecha.
     private JDateChooser comboFecha;
     // Controladores
@@ -104,7 +106,8 @@ public class PanelAsignar extends JPanel{
         
         // Llenar automaticamente las tablas con la consultas
         // a la base de datos.
-        this.BA.obtenerObras();
+        //ObrasDTO obrasDTO = new ObrasDTO();
+        this.BA.obtenerObras(comboObra);
         this.BA.obtenerMateriales();
         this.control();
      }      
@@ -248,10 +251,6 @@ public class PanelAsignar extends JPanel{
         JPanel surNorteEste  = new JPanel();
         surNorteEste.setOpaque(false);
         surNorte.add(surNorteEste, BorderLayout.EAST);
-        JLabel obraSelec  = new JLabel("Obra 1");
-        surNorteEste.add(obraSelec,BorderLayout.WEST);
-        JLabel fechaSelec = new JLabel("26/05/17");
-        surNorteEste.add(fechaSelec,BorderLayout.EAST);
         
         PO = new JPanel();
         PO.setBackground(new Color(52, 73, 94));
@@ -300,7 +299,7 @@ public class PanelAsignar extends JPanel{
     	
     	return new AsignarDTO(
     			
-    			this.comboObra.getSelectedIndex()+1,
+    			this.comboObra.getItemAt(comboObra.getSelectedIndex()).getIdObra(),
     			this.obtenerFecha());
     }
     
@@ -356,9 +355,9 @@ public class PanelAsignar extends JPanel{
     	this.txtCantidadSel.setText("");
 	}
     
-    public void llenarComboObra(String item) {
+    public void llenarComboObra(ObrasDTO obras) {
 		
-    	comboObra.addItem(item);
+    	
 	}
 
     public void vaciar_comboObra() {
@@ -484,15 +483,15 @@ public class PanelAsignar extends JPanel{
 		this.btnProcesarSelect = btnProcesarSelect;
 	}
 
-	public JComboBox getComboObra() {
-		return comboObra;
-	}
+  public JComboBox<ObrasDTO> getComboObra() {
+    return comboObra;
+  }
 
-	public void setComboObra(JComboBox comboObra) {
-		this.comboObra = comboObra;
-	}
+  public void setComboObra(JComboBox<ObrasDTO> comboObra) {
+    this.comboObra = comboObra;
+  }
 
-	public txt getTxtCantidadSel() {
+  public txt getTxtCantidadSel() {
 		return txtCantidadSel;
 	}
 

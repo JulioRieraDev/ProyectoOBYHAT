@@ -37,7 +37,13 @@ public class ObrasDTO {
 		this.direccionObra = direccionObra;
 	}
 
-        public final Object[] toArray(){
+   public ObrasDTO(int idObra, String nombreObra) {
+    
+	   this.idObra = idObra;
+	   this.nombreObra = nombreObra;
+   }
+
+    public final Object[] toArray(){
             Object[] datos = new Object[5];
             
             //datos[0] = this.idObra;
@@ -48,6 +54,11 @@ public class ObrasDTO {
             
             return datos;
         }
+    
+    public String toString() {
+    	
+    	return nombreObra;
+    }
 
 	public int getIdObra() {
 		return idObra;
