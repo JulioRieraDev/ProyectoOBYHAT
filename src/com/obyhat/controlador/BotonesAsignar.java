@@ -13,12 +13,15 @@ import com.obyhat.modelo.dto.CategoriaDTO;
 import com.obyhat.modelo.dto.MaterialesDTO;
 import com.obyhat.modelo.dto.ObrasDTO;
 import com.obyhat.modelo.dto.UsuarioDTO;
+import com.obyhat.vista.paneles.HistorialAsignaciones;
 import com.obyhat.vista.paneles.PanelAsignar;
 import com.obyhat.vista.paneles.SeleccionarObra;
 
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.util.Calendar;
 import java.util.List;
 
@@ -28,9 +31,10 @@ import javax.swing.JOptionPane;
  *
  * @author joselara
  */
-public class BotonesAsignar implements ActionListener {
+public class BotonesAsignar implements ActionListener, ItemListener {
 
 	private PanelAsignar  PA;
+	private HistorialAsignaciones HA;
 	private AsignarDAO    asignarDAO;
 	private MaterialesDAO misMateriales;
 	private ObraDAO       miObra;
@@ -73,16 +77,35 @@ public class BotonesAsignar implements ActionListener {
 			this.procesarAsignacion();
 		}
 		
+		if (e.getSource() == this.PA.getBtnEliminarSelect()) {
+		      
+			System.out.println("Boton 'Eliminar Seleccion' escuchando Rock!");
+			
+			this.eliminarSeleccion();
+		}
+		
+		if (e.getSource() == this.PA.getBtnVerAsignaciones()) {
+		      
+			System.out.println("Boton 'Ver Asignaciones' escuchando Rock!");
+			
+			//new HistorialAsignaciones().setVisible(true);
+			
+			int obra        = PA.getComboObra().getSelectedIndex();
+			String fecha 	    = PA.obtenerFecha();
+			
+			JOptionPane.showMessageDialog(null, obra+" \n "+fecha+" \n "+PA.ObtenerDatos().getObra());
+		}
     }
     
     public void agregarMaterial() {
 		
 		int filaSeleccionada = PA.getTablaMateriales().getSelectedRow();
-		String cantidadSele     = this.PA.getTxtCantidadSel().getText();
 		int cantidadSelec;
+		String cantidadSele     = this.PA.getTxtCantidadSel().getText();
+		
 		//String datos         = PA.getTablaMateriales().getValueAt(filaSeleccionada, 0).toString();
 		
-		if (cantidadSele.equals("")) {
+		if (cantidadSele.equals("") || cantidadSele.equals("0")) {
 			
 			JOptionPane.showMessageDialog(null, "El campo cantidad no puede estar vacio");
 		}
@@ -225,6 +248,8 @@ public class BotonesAsignar implements ActionListener {
 						
 						asignarDAO.insertarDetalles(new AsignarDTO(cantidadSel, idMaterial, idUltimaAsig));
 					}
+					
+					this.PA.vaciarTablaAsig();
 				}
 				
 				else{
@@ -285,5 +310,15 @@ public class BotonesAsignar implements ActionListener {
         
         return msj;//devuelve msj.
     }
+
+  @Override
+  public void itemStateChanged(ItemEvent e) {
+    
+    if (e.getSource() == this.PA.getComboObra()) {
+	  
+    	System.out.println(this.PA.getComboObra().getItemCount());
+    	System.out.println(this.PA.getComboObra().getSelectedIndex()); 
+    }
+  }
 	
 }

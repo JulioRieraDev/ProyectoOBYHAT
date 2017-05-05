@@ -70,7 +70,7 @@ public class PanelAsignar extends JPanel{
     private Separator 	separatorNom,separatorCod;
     private labelTitulo labelTitulo1,materialesDis,asignarMat;
     private Botones 	btnAgregar,btnActualizar,btnCancelar,btnEliminarSelect,
-    					btnProcesarSelect;
+    					btnProcesarSelect, btnVerAsignaciones;
     
     private JComboBox 	comboObra;
     // Elegir fecha.
@@ -165,6 +165,12 @@ public class PanelAsignar extends JPanel{
         P5.add(S5);
         panel.add(P5,gbc);
         
+        gbc.insets = new Insets(250,0,0,0);
+        
+        gbc.gridx = 0;	gbc.gridy = 2;
+        btnVerAsignaciones = new Botones("Ver Asignaciones");
+        btnVerAsignaciones.setPreferredSize(new java.awt.Dimension(175, 35));
+        panel.add(btnVerAsignaciones,gbc);
     }
 
     public JPanel PanelCentral(){
@@ -212,7 +218,6 @@ public class PanelAsignar extends JPanel{
         selecCantidad  = new labelForm("Seleccionar cantidad: ");
         norteSur.add(selecCantidad);
         txtCantidadSel = new txt();
-        txtCantidadSel.setText("0");
         txtCantidadSel.setPreferredSize(new Dimension(1, 25));
         norteSur.add(txtCantidadSel);
         btnAgregar = new Botones("Agregar");
@@ -284,6 +289,9 @@ public class PanelAsignar extends JPanel{
     	this.btnAgregar.addActionListener(BA);
     	btnEliminarSelect.addActionListener(BA);
     	btnProcesarSelect.addActionListener(BA);
+    	btnVerAsignaciones.addActionListener(BA);
+    	
+    	this.getComboObra().addItemListener(BA);
     	
     	this.txtCantidadSel.addKeyListener(TA);
 	}    
@@ -319,6 +327,15 @@ public class PanelAsignar extends JPanel{
     public void removerSeleccion(int filaSeleccionada) {
     	
     	this.modeloTablaAsig.removeRow(filaSeleccionada);
+    }
+    
+    public void vaciarTablaAsig() {
+    	
+    	for (int i = 0; i < tablaSeleccionados.getRowCount(); i++) {
+            
+            modeloTablaAsig.removeRow(i);
+            i-=1;
+        }
     }
     
     public void llenarTablaMat(Object [] datos) {
@@ -483,7 +500,15 @@ public class PanelAsignar extends JPanel{
 		this.txtCantidadSel = txtCantidadSel;
 	}
 
-	public static void main(String args[]) {
+  public Botones getBtnVerAsignaciones() {
+    return btnVerAsignaciones;
+  }
+
+  public void setBtnVerAsignaciones(Botones btnVerAsignaciones) {
+    this.btnVerAsignaciones = btnVerAsignaciones;
+  }
+
+  public static void main(String args[]) {
 		
 		PanelAsignar PA = new PanelAsignar();
 		

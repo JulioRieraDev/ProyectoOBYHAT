@@ -22,6 +22,19 @@ public class AsignarDAO implements CRUD<AsignarDTO>{
 	private static final String SQL_READALL   = "SELECT fechaAsignacion, cantidad FROM asignar";
 	private static final String SQL_READLAST  = "SELECT idAsignacion FROM asignar ORDER BY idAsignacion DESC LIMIT 1";
 	private static final String SQL_INSERTDET = "INSERT INTO detalleAsignar (cantidad, idMaterial, idAsignacion) VALUES (?, ?, ?)";
+	private static final String SQL_TOTAL_ASI = "SELECT  asignar.idAsignacion, asignar.fechaAsignacion, `nombre`, encargado, SUM(detalleAsignar.cantidad)\n" + 
+											    "FROM `obra`\n" + 
+											    "INNER JOIN asignar USING (idObra)\n" + 
+											    "INNER JOIN detalleAsignar USING (idAsignacion)\n" + 
+											    "GROUP BY detalleAsignar.idAsignacion  \n" + 
+											    "ORDER BY `asignar`.`fechaAsignacion` DESC";
+	private static final String SQL_TOTAL_MAT = "SELECT obra.`nombre`, asignar.idAsignacion, asignar.fechaAsignacion, material.nombreMaterial,detalleAsignar.cantidad \n" + 
+											    "FROM `obra`\n" + 
+											    "INNER JOIN asignar USING (idObra)\n" + 
+											    "INNER JOIN detalleAsignar USING (idAsignacion)\n" + 
+											    "INNER JOIN material USING (idMaterial)\n" + 
+											    "WHERE asignar.idAsignacion = ?  \n" + 
+											    "ORDER BY `material`.`nombreMaterial` ASC";
 	
 	
 	private static final Conexion miConexion = Conexion.saberEstado();
@@ -52,7 +65,7 @@ public class AsignarDAO implements CRUD<AsignarDTO>{
 		} catch (SQLException e) {
 			
 			JOptionPane.showMessageDialog(null, "Error al registrar todo esto.", null, JOptionPane.INFORMATION_MESSAGE);
-			System.out.println("Error al registrar un nuev Usuario. \n"+e);
+			System.out.println("Error al registrar todo esto. \n"+e);
 		} finally {
 			
 			miConexion.Desconectar();
@@ -84,7 +97,7 @@ public class AsignarDAO implements CRUD<AsignarDTO>{
 		} catch (SQLException e) {
 			
 			JOptionPane.showMessageDialog(null, "Error al registrar todo esto.", null, JOptionPane.INFORMATION_MESSAGE);
-			System.out.println("Error al registrar un nuev Usuario. \n"+e);
+			System.out.println("Error al registrar todo esto. \n"+e);
 		} finally {
 			
 			miConexion.Desconectar();
@@ -93,16 +106,6 @@ public class AsignarDAO implements CRUD<AsignarDTO>{
 		return false;
 	}
 	
-	@Override
-	public boolean Actualizar(AsignarDTO datos) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-	@Override
-	public boolean Eliminar(Object key) {
-		// TODO Auto-generated method stub
-		return false;
-	}
 	@Override
 	public AsignarDTO Consultar(Object key) {
 
@@ -167,13 +170,13 @@ public class AsignarDAO implements CRUD<AsignarDTO>{
 		
 		try {
 			
-			pStatement = miConexion.obtenerConexion().prepareStatement(SQL_READALL);
+			pStatement = miConexion.obtenerConexion().prepareStatement(SQL_TOTAL_ASI);
 			
 			res = pStatement.executeQuery();
 			
 			while (res.next()) {
 				
-				//asignar.add(new AsignarDTO(res.getString(1),res.getInt(2)));
+				asignar.add(new AsignarDTO(res.getInt(1),res.getString(2),res.getString(3),res.getString(4),res.getInt(5)));
 			}
                         
                         
@@ -188,4 +191,42 @@ public class AsignarDAO implements CRUD<AsignarDTO>{
 		return asignar;
 	}
 	
+	public List<AsignarDTO> materialesAsignados(Object key) {
+
+		ArrayList<AsignarDTO> materialesAsig = new ArrayList<>();
+		
+		try {
+			
+			pStatement = miConexion.obtenerConexion().prepareStatement(SQL_TOTAL_MAT);
+			pStatement.setString(1, key.toString());
+			
+			res = pStatement.executeQuery();
+			
+			while (res.next()) {
+				
+				materialesAsig.add(new AsignarDTO(res.getString(1),res.getInt(2),res.getString(3),res.getString(4),res.getInt(5))); 
+			}
+			
+			
+		} catch (Exception e) {
+			
+			JOptionPane.showMessageDialog(null, "Error al intentar consultar los materiales asignados. \n"+e, null, JOptionPane.INFORMATION_MESSAGE);
+		} finally {
+			
+			miConexion.Desconectar();
+		}
+		
+		return materialesAsig;
+	}
+	
+	@Override
+	public boolean Actualizar(AsignarDTO datos) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	@Override
+	public boolean Eliminar(Object key) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }

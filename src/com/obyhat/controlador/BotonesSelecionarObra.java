@@ -1,5 +1,6 @@
 package com.obyhat.controlador;
 
+import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
@@ -16,14 +17,11 @@ import com.obyhat.vista.paneles.SeleccionarObra;
 public class BotonesSelecionarObra implements ActionListener {
 
 	private SeleccionarObra SO;
-	private BotonesAsignar	BA;
 	private MaterialesDAO   materiales;
-	private String 			nombre;
 	
 	
 	public BotonesSelecionarObra(SeleccionarObra SO) {
 		
-		this.BA = BA;
 		this.SO = SO;
 		this.materiales = new MaterialesDAO();
 	}
@@ -36,7 +34,9 @@ public class BotonesSelecionarObra implements ActionListener {
 			
 			System.out.println("Boton Seleccionar escuchando");
 			
-			seleccionarMaterial();
+			SO.contentPane.add(SO.panelAsigDos,BorderLayout.CENTER);
+			
+			//seleccionarMaterial();
 		}
 	}
 	
@@ -62,15 +62,7 @@ public class BotonesSelecionarObra implements ActionListener {
 
 			try {
 					
-				String [] datos = new String[2];
-				datos[0]= SO.getTablaObras().getValueAt(filaSeleccionada, 0).toString();
-				datos[1]= SO.getTablaObras().getValueAt(filaSeleccionada, 1).toString();
-				
-				System.out.println(datos[0]+" - "+datos[1]);
-				
-				
-            	//PA.llenarFormulario(datos);
-            	//PA.removerSeleccion(filaSeleccionada);
+				SO.contentPane.add(SO.panelAsigDos,BorderLayout.CENTER);
                 	
                 	
 			} catch (Exception e2) {

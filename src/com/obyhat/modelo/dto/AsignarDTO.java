@@ -5,13 +5,15 @@ import java.sql.Date;
 public class AsignarDTO {
 
 	private int 	idAsignacion;
-	private String  obra;
 	private int     idObra;
+	private String  obra;
+	private String  encargadoObra;
 	private String 	fechaAsignacion;
 	private String 	nombreMaterial;
 	private int     idMaterial;
 	private int 	cantidadDisponible;
 	private int 	cantidadSeleccionada;
+	private int     sumaMaterialesAsig;
 	
 	
 	
@@ -38,28 +40,30 @@ public class AsignarDTO {
 	}
 
 
-	public AsignarDTO(String obra, String fechaAsignacion, String nombreMaterial,
+	public AsignarDTO(String obra,int idAsignacion, String fechaAsignacion, String nombreMaterial,
 			int cantidadSeleccionada) {
 		
 		this.obra = obra;
+		this.idAsignacion = idAsignacion;
 		this.fechaAsignacion = fechaAsignacion;
 		this.nombreMaterial = nombreMaterial;
 		this.cantidadSeleccionada = cantidadSeleccionada;
 	}
 
 	
-	public AsignarDTO(int idOrdenSalidad, String obra, String fechaAsignacion, String nombreMaterial,
-			int cantidadDisponible, int cantidadSeleccionada) {
-		
-		this.idAsignacion = idOrdenSalidad;
-		this.obra = obra;
-		this.fechaAsignacion = fechaAsignacion;
-		this.nombreMaterial = nombreMaterial;
-		this.cantidadDisponible = cantidadDisponible;
-		this.cantidadSeleccionada = cantidadSeleccionada;
-	}
 
-	public final Object[] toArray(){
+  public AsignarDTO(int idAsignacion,String fechaAsignacion,String obra,
+		  			String encargadoObra,int sumaMaterialesAsig) {
+    
+    this.idAsignacion = idAsignacion;
+    this.fechaAsignacion = fechaAsignacion;
+    this.obra = obra;
+    this.encargadoObra = encargadoObra;
+    this.sumaMaterialesAsig = sumaMaterialesAsig;
+  }
+
+
+  public final Object[] toArray(){
         Object[] datos = new Object[5];
         
         //datos[0] = this.idAsignacion;
@@ -149,5 +153,21 @@ public class AsignarDTO {
 	public void setIdMaterial(int idMaterial) {
 		this.idMaterial = idMaterial;
 	}
+
+
+  public String getEncargadoObra() {
+  return encargadoObra;}
+
+
+  public void setEncargadoObra(String encargadoObra) {
+  this.encargadoObra = encargadoObra;}
+
+
+public int getSumaMaterialesAsig() {
+return sumaMaterialesAsig;}
+
+
+public void setSumaMaterialesAsig(int sumaMaterialesAsig) {
+this.sumaMaterialesAsig = sumaMaterialesAsig;}
 	
 }

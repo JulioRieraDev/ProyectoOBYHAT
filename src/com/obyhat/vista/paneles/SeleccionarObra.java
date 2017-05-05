@@ -19,16 +19,15 @@ public class SeleccionarObra extends JFrame {
 
 	private DefaultTableModel modeloTabla;
     private String [][] datos = {};
-    private String [] column = {"Nombre","Cantidad"};
+    private String [] column = {"Fecha de Asignacion","Obra", "Encargado", "Total de Materiales Asignados"};
     private JTable tablaObras;
     
     private JScrollPane scrollPane;
-	private JPanel contentPane,panelSur;
+	public JPanel contentPane,panelSur,panelAsigUno,panelAsigDos;
 	
-	private JButton btnSeleccionar;
+	private JButton btnSeleccionar,btnAtras;
 
 	private BotonesSelecionarObra BO = new BotonesSelecionarObra(this);
-	private PanelAsignar PA;
 	
 	
 	/**
@@ -53,32 +52,55 @@ public class SeleccionarObra extends JFrame {
 	public SeleccionarObra() {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setTitle("Seleccionar material");
-		setSize(650, 400);
+		setSize(850, 500);
 		setLocationRelativeTo(null);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
 		setContentPane(contentPane);
 			
+		
+			panelAsigUno = new JPanel();
+			panelAsigUno.setLayout(new BorderLayout(0, 0));
+			contentPane.add(panelAsigUno,BorderLayout.CENTER);
+			
 			modeloTabla = new DefaultTableModel(null,column);
-	        
+			scrollPane = new JScrollPane();
+	        tablaObras= new JTable();
+	        tablaObras.getTableHeader().setFont(new Font ("Acme", 1,15));// Encabezado de tablaObras.
+	        tablaObras.setModel(modeloTabla);
+	        scrollPane.setViewportView(tablaObras);
+	        panelAsigUno.add(scrollPane, BorderLayout.CENTER);
+			
+			panelSur = new JPanel();
+			panelSur.setPreferredSize(new Dimension(0, 50));
+			panelAsigUno.add(panelSur, BorderLayout.SOUTH);
+			btnSeleccionar = new JButton("Seleccionar");
+			btnSeleccionar.addActionListener(BO);
+			panelSur.add(btnSeleccionar);
+			
+			
+			
+			panelAsigDos = new JPanel();
+			panelAsigDos.setLayout(new BorderLayout(0, 0));
+			//contentPane.add(panelAsigDos,BorderLayout.CENTER);
+			
+			modeloTabla = new DefaultTableModel(null,column);
 	        scrollPane = new JScrollPane();
 	        tablaObras= new JTable();
 	        tablaObras.getTableHeader().setFont(new Font ("Acme", 1,15));// Encabezado de tablaObras.
 	        tablaObras.setModel(modeloTabla);
 	        scrollPane.setViewportView(tablaObras);
-	        contentPane.add(scrollPane, BorderLayout.CENTER);
+	        panelAsigDos.add(scrollPane, BorderLayout.CENTER);
 			
 			panelSur = new JPanel();
 			panelSur.setPreferredSize(new Dimension(0, 50));
-			contentPane.add(panelSur, BorderLayout.SOUTH);
-			
-			btnSeleccionar = new JButton("Seleccionar");
-			btnSeleccionar.addActionListener(BO);
-			panelSur.add(btnSeleccionar);
-			
+			panelAsigDos.add(panelSur, BorderLayout.SOUTH);
+			btnAtras = new JButton("Hola");
+			//btnAtras.addActionListener(BO);
+			panelSur.add(btnAtras);
 		
-			BO.obtenerMateriales();
+			//BO.obtenerMateriales();
 	}
 	
 	public void limpiarTabla() {
@@ -118,6 +140,8 @@ public class SeleccionarObra extends JFrame {
 	public void setModeloTabla(DefaultTableModel modeloTabla) {
 		this.modeloTabla = modeloTabla;
 	}
+
+  
 
 	
 }
