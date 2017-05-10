@@ -13,6 +13,8 @@ import java.util.Date;
  */
 public class MaterialesDTO {
     private int idMaterial;
+    private int idCategoria;
+    private String nombreCategoria;
     private String nombreMaterial;
     private int cantidadMaterial;
     private int Existencia;
@@ -33,14 +35,14 @@ public class MaterialesDTO {
                 
 	}
     
-    public MaterialesDTO(int idMaterial, String nombreMaterial, int cantidadMaterial) {
+public MaterialesDTO(int idMaterial, String nombreMaterial, int cantidadMaterial) {
 		
 		this.idMaterial = idMaterial;
 		this.nombreMaterial = nombreMaterial;
 		this.cantidadMaterial = cantidadMaterial;
 	}
 
-	public MaterialesDTO(String nombreMaterial,int Existencia,int ExistenciaMin,int ExistenciaMax,int cantidadMaterial,String fechaRegistro) {
+    public MaterialesDTO(String nombreMaterial,int Existencia,int ExistenciaMin,int ExistenciaMax,int cantidadMaterial,String fechaRegistro) {
 		
 		this.nombreMaterial = nombreMaterial;             
                 this.Existencia=Existencia;
@@ -73,23 +75,37 @@ public class MaterialesDTO {
        this.cantidadMaterial=cantidadMaterial;
        this.fechaRegistro=fechaRegistro;
     }
+    
+    public MaterialesDTO(int idCategoria,String nombreMaterial, int cantidadMaterial, String fechaRegistro) {
+       this.idCategoria=idCategoria;
+       this.nombreMaterial= nombreMaterial;  
+       this.cantidadMaterial=cantidadMaterial;
+       this.fechaRegistro=fechaRegistro;
+    }
+    public MaterialesDTO(String nombreCategoria,String nombreMaterial, int cantidadMaterial, String fechaRegistro) {
+       this.nombreCategoria=nombreCategoria;
+       this.nombreMaterial= nombreMaterial;  
+       this.cantidadMaterial=cantidadMaterial;
+       this.fechaRegistro=fechaRegistro;
+    }
+
 
     
     public final Object[] toArray(){
-            Object[] datos = new Object[5];
+            Object[] datos = new Object[3];
             
-            datos[0] = this.idMaterial;
-            datos[1] = this.nombreMaterial;         
-            datos[2] = this.Existencia;
-            //datos[3] = this.ExistenciaMin;
-            //datos[4] = this.ExistenciaMax;
-            //datos[5] = this.cantidadMaterial;
-            //datos[6]=this.fechaRegistro;
+            //datos[0] = this.idObra;
+            datos[0] = this.nombreMaterial;         
+            //datos[1] = this.Existencia;
+            //datos[2] = this.ExistenciaMin;
+            //datos[3] = this.ExistenciaMax;
+            datos[1] = this.cantidadMaterial;
+            datos[2]=this.fechaRegistro;
             
             
             return datos;
         }
-    
+
     public final Object[] toArrayDos(){
         Object[] datos = new Object[2];
         
@@ -99,7 +115,7 @@ public class MaterialesDTO {
         
         return datos;
     }
-
+    
     public int getIdMaterial() {
         return idMaterial;
     }
@@ -148,14 +164,28 @@ public class MaterialesDTO {
         this.fechaRegistro = fechaRegistro;
     }
 
-   
-
     public int getCantidadMaterial() {
         return cantidadMaterial;
     }
 
     public void setCantidadMaterial(int cantidadMaterial) {
         this.cantidadMaterial = cantidadMaterial;
+    }
+
+    public int getIdCategoria() {
+        return idCategoria;
+    }
+
+    public void setIdCategoria(int idCategoria) {
+        this.idCategoria = idCategoria;
+    }
+
+    public String getNombreCategoria() {
+        return nombreCategoria;
+    }
+
+    public void setNombreCategoria(String nombreCategoria) {
+        this.nombreCategoria = nombreCategoria;
     }
 
   

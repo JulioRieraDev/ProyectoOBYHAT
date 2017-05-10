@@ -15,7 +15,6 @@ import com.obyhat.modelo.dto.MaterialesDTO;
 import com.obyhat.modelo.dto.ObrasDTO;
 import com.obyhat.vista.paneles.HistorialAsignaciones;
 import com.obyhat.vista.paneles.PanelAsignar;
-import com.obyhat.vista.paneles.SeleccionarObra;
 
 
 public class BotonesHistorialAsig implements ActionListener {

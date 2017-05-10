@@ -53,20 +53,13 @@ public class PanelCategorias extends JPanel{
     private Botones btnAgregar,btnModificar,btnEliminar,btnActualizar, btnCancelar,btnBuscar;
     private JTextArea txtDesCategoria;
     
-    private BotonesCategoria BC;
+    private BotonesCategoria BC = new BotonesCategoria(this);
     private TextoCategoria   TC = new TextoCategoria(this);
+       
     
-    
-    private VistaPrincipal VP;
-    
-   
-    
-    public PanelCategorias(VistaPrincipal VP){
+    public PanelCategorias(){
     	
-    	this.VP = VP;
-    	BC = new BotonesCategoria(VP,this);
-    	
-        setLayout(new GridLayout(1, 0, 0, 0));
+    	setLayout(new GridLayout(1, 0, 0, 0));
 		
 	scrollPane = new JScrollPane();	
 		

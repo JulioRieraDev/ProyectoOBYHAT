@@ -513,7 +513,7 @@ public class PanelAsignar extends JPanel{
     this.btnVerAsignaciones = btnVerAsignaciones;
   }
 
- /* public static void main(String args[]) {
+  public static void main(String args[]) {
 		
 		PanelAsignar PA = new PanelAsignar();
 		
@@ -526,6 +526,6 @@ public class PanelAsignar extends JPanel{
 		frame.getContentPane().setBackground(Color.WHITE);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
-	}*/
+	}
             
 }

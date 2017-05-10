@@ -12,6 +12,7 @@ import javax.swing.JTextField;
 import com.obyhat.modelo.dto.UsuarioDTO;
 import com.obyhat.vista.principal.VistaPrincipal;
 
+
 /**
  *
  * @author Jeis
@@ -124,7 +125,11 @@ public class PanelLogin extends javax.swing.JFrame {
         btnSalir.setText("SALIR");
         btnSalir.setBorderPainted(false);
         btnSalir.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        
+        btnSalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalirActionPerformed(evt);
+            }
+        });
 
         btnIniciar.setBackground(new java.awt.Color(254, 92, 93));
         btnIniciar.setFont(fontBtnlog);
@@ -132,7 +137,11 @@ public class PanelLogin extends javax.swing.JFrame {
         btnIniciar.setText("INICIAR");
         btnIniciar.setBorderPainted(false);
         btnIniciar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        
+        btnIniciar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnIniciarActionPerformed(evt);
+            }
+        });
 
         txtPass.setBackground(new java.awt.Color(44, 62, 80));
         txtPass.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
@@ -204,6 +213,16 @@ public class PanelLogin extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
+        
+        System.exit(0);
+    }//GEN-LAST:event_btnSalirActionPerformed
+
+    private void btnIniciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIniciarActionPerformed
+        PanelLogin.this.dispose();
+        VistaPrincipal VP = new VistaPrincipal();
+        VP.setVisible(true);
+    }
    
   public UsuarioDTO obtenerDatos() {
 

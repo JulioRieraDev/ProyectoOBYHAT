@@ -15,7 +15,6 @@ import com.obyhat.modelo.dto.ObrasDTO;
 import com.obyhat.modelo.dto.UsuarioDTO;
 import com.obyhat.vista.paneles.HistorialAsignaciones;
 import com.obyhat.vista.paneles.PanelAsignar;
-import com.obyhat.vista.paneles.SeleccionarObra;
 import com.obyhat.vista.principal.VistaPrincipal;
 
 import java.awt.BorderLayout;
@@ -282,7 +281,7 @@ public class BotonesAsignar implements ActionListener, ItemListener {
 	
 	public void obtenerMateriales() {
 		
-		List<MaterialesDTO> materiales = this.misMateriales.ConsultarTodos();
+		List<MaterialesDTO> materiales = this.misMateriales.ConsultarTodosAsig();
     	
 		//SO.limpiarTabla();
         

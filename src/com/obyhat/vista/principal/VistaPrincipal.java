@@ -33,6 +33,7 @@ import com.obyhat.vista.paneles.PanelCategorias;
 import com.obyhat.vista.paneles.PanelInicio;
 import com.obyhat.vista.paneles.PanelMateriales;
 import com.obyhat.vista.paneles.PanelObras;
+import com.obyhat.vista.paneles.PanelProveedores;
 import com.obyhat.vista.paneles.PanelUsuarios;
 
 
@@ -69,11 +70,11 @@ public class VistaPrincipal extends JFrame {
 	
         //INSTANCIANDO LOS DIFERENTES PANELES A MOSTRAR
         private PanelInicio      v0 = new PanelInicio();
-        private PanelMateriales  v1 = new PanelMateriales(this);
+        private PanelMateriales  v1 = new PanelMateriales();
         private PanelAsignar     v2 = new PanelAsignar();
-        private PanelCategorias  v3 = new PanelCategorias(this);
-        private PanelObras       v4 = new PanelObras(this);
-        //private PanelProveedores v5 = new PanelProveedores();
+        private PanelCategorias  v3 = new PanelCategorias();
+        private PanelObras       v4 = new PanelObras();
+        private PanelProveedores v5 = new PanelProveedores();
         private PanelUsuarios    v6 = new PanelUsuarios();
         //private PanelModificacionesMat v7 = new  PanelModificacionesMat();
         //private PanelAsignacionesObras v8 = new PanelAsignacionesObras();
@@ -126,7 +127,7 @@ public class VistaPrincipal extends JFrame {
                 itemRegistrados = new MenuItem("Historial de modificaciones Materiales");
                 itemRegistrados.setFont(fontItem);
                 itemRegistrados.add(new Separator());
-                regMateriales.add(itemRegistrados);
+                //regMateriales.add(itemRegistrados);
                 itemAsignar = new MenuItem("Asignar materiales a una obra");
                 itemAsignar.setFont(fontItem);
                 itemAsignar.add(new Separator());
@@ -134,7 +135,7 @@ public class VistaPrincipal extends JFrame {
                 itemAsignados2 = new MenuItem("Historial de Asignaciones de Materiales");
                 itemAsignados2.setFont(fontItem);
                 itemAsignados2.add(new Separator());
-                regMateriales.add(itemAsignados2);
+                //regMateriales.add(itemAsignados2);
             barraMenu.add(regMateriales);
             
             
@@ -156,7 +157,7 @@ public class VistaPrincipal extends JFrame {
                 itemAsignados = new MenuItem("Historial de Asignaciones de Materiales");
                 itemAsignados.setFont(fontItem);
                 itemAsignados.add(new Separator());
-                regObra.add(itemAsignados);
+                //regObra.add(itemAsignados);
             barraMenu.add(regObra);
             
             
@@ -207,7 +208,7 @@ public class VistaPrincipal extends JFrame {
                 panelCentral.add(v2,VENTANA2);
                 panelCentral.add(v3,VENTANA3);
                 panelCentral.add(v4,VENTANA4);
-                //panelCentral.add(v5,VENTANA5);
+                panelCentral.add(v5,VENTANA5);
                 panelCentral.add(v6,VENTANA6);
                 //panelCentral.add(v7,VENTANA7);
                 //panelCentral.add(v8,VENTANA8);

@@ -17,15 +17,13 @@ import javax.swing.JOptionPane;
 public class BotonesObras implements ActionListener {
 
 	private PanelObras PO;
-	private VistaPrincipal VP;
 	private ObraDAO miObraDAO;
 	private BotonesAsignar asignar;
 	private String nombre;
 	
 	
-	public BotonesObras(VistaPrincipal VP,PanelObras PO) {
+	public BotonesObras(PanelObras PO) {
 		
-		this.VP = VP;
 		this.PO = PO;
 		this.miObraDAO = new ObraDAO();
 		//this.asignar = new BotonesAsignar(null);

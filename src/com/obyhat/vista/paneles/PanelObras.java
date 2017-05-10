@@ -62,16 +62,12 @@ public class PanelObras extends JPanel{
     
     private TextAutoCompleter autoCompletar;
     
-    private BotonesObras CO;
+    private BotonesObras CO = new BotonesObras(this);;
     private TextoObras CT = new TextoObras(this);
     
-    private VistaPrincipal VP;
     
-    public PanelObras(VistaPrincipal VP){
-        
-    	this.VP = VP;
-    	this.CO = new BotonesObras(VP ,this);
-    	
+    public PanelObras(){
+            	
     	setLayout(new GridLayout(1, 0, 0, 0));
 		scrollPane = new JScrollPane();	
 		
@@ -250,7 +246,7 @@ public class PanelObras extends JPanel{
             //btnAsignaciones.setEnabled(false);
             btnAsignaciones.setPreferredSize(new Dimension(150, 35));
             btnAsignaciones.addActionListener(this.CO);
-            PCB.add(btnAsignaciones);
+            //PCB.add(btnAsignaciones);
             
             JLabel espacio = new JLabel(" ");
             PCB.add(espacio);
