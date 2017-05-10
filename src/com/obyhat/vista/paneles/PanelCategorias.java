@@ -30,6 +30,7 @@ import com.obyhat.resources.components.Separator;
 import com.obyhat.resources.components.labelForm;
 import com.obyhat.resources.components.labelTitulo;
 import com.obyhat.resources.components.txt;
+import com.obyhat.vista.principal.VistaPrincipal;
 
 /**
  *
@@ -52,40 +53,19 @@ public class PanelCategorias extends JPanel{
     private Botones btnAgregar,btnModificar,btnEliminar,btnActualizar, btnCancelar,btnBuscar;
     private JTextArea txtDesCategoria;
     
-    private BotonesCategoria BC = new BotonesCategoria(this);
+    private BotonesCategoria BC;
     private TextoCategoria   TC = new TextoCategoria(this);
     
-    private void dimension(int x, int y, JPanel p){
     
-        Dimension panelD= new Dimension(x,y);
-        p.setPreferredSize(panelD);
-        p.setMaximumSize(panelD);
-    }
+    private VistaPrincipal VP;
     
-    public JScrollPane Creandotabla(JScrollPane scrollPane){
+   
     
-        modeloTabla = new DefaultTableModel(datos,column);
-        
-        scrollPane= new JScrollPane();
-        tablaCategoria= new JTable();
-        tablaCategoria.getTableHeader().setFont(new Font ("Acme", 0,16));// Encabezado de tablaCategoria
-        //tablaCategoria.getTableHeader().setBackground(Color.black);
-        // tablaCategoria.getTableHeader().setForeground(Color.BLUE);
-        //tablaCategoria.getTableHeader().setReorderingAllowed(false);// No permite que se muevan las columnas
-        tablaCategoria.setModel(modeloTabla);
-        scrollPane.setViewportView(tablaCategoria);
-        
-        return scrollPane;
-        
-    }
-    
-    public void LimpiarCampos(){
-        
-        txtCategoria.setText("");
-        txtDesCategoria.setText("");
-    }
-    
-    public PanelCategorias(){
+    public PanelCategorias(VistaPrincipal VP){
+    	
+    	this.VP = VP;
+    	BC = new BotonesCategoria(VP,this);
+    	
         setLayout(new GridLayout(1, 0, 0, 0));
 		
 	scrollPane = new JScrollPane();	
@@ -294,7 +274,35 @@ public class PanelCategorias extends JPanel{
     			this.txtCategoria.getText(),
     			this.txtDesCategoria.getText());
 	}
+    private void dimension(int x, int y, JPanel p){
+        
+        Dimension panelD= new Dimension(x,y);
+        p.setPreferredSize(panelD);
+        p.setMaximumSize(panelD);
+    }
     
+    public JScrollPane Creandotabla(JScrollPane scrollPane){
+    
+        modeloTabla = new DefaultTableModel(datos,column);
+        
+        scrollPane= new JScrollPane();
+        tablaCategoria= new JTable();
+        tablaCategoria.getTableHeader().setFont(new Font ("Acme", 0,16));// Encabezado de tablaCategoria
+        //tablaCategoria.getTableHeader().setBackground(Color.black);
+        // tablaCategoria.getTableHeader().setForeground(Color.BLUE);
+        //tablaCategoria.getTableHeader().setReorderingAllowed(false);// No permite que se muevan las columnas
+        tablaCategoria.setModel(modeloTabla);
+        scrollPane.setViewportView(tablaCategoria);
+        
+        return scrollPane;
+        
+    }
+    
+    public void LimpiarCampos(){
+        
+        txtCategoria.setText("");
+        txtDesCategoria.setText("");
+    }
     public DefaultTableModel getModeloTabla() {
         return modeloTabla;
     }
@@ -383,7 +391,7 @@ public class PanelCategorias extends JPanel{
 		this.btnBuscar = btnBuscar;
 	}
 
-	public static void main(String args[]) {
+	/*public static void main(String args[]) {
 		JFrame frame = new JFrame("Probando panel individual...");
 		frame.setLayout(new GridLayout());
 		PanelCategorias PA = new PanelCategorias();
@@ -394,5 +402,5 @@ public class PanelCategorias extends JPanel{
 		frame.setLocationRelativeTo(null);;
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
-	}         
+	}    */     
 }

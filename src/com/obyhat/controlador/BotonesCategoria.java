@@ -10,16 +10,19 @@ import com.obyhat.modelo.dao.CategoriaDAO;
 import com.obyhat.modelo.dto.CategoriaDTO;
 import com.obyhat.modelo.dto.ObrasDTO;
 import com.obyhat.vista.paneles.PanelCategorias;
+import com.obyhat.vista.principal.VistaPrincipal;
 
 public class BotonesCategoria implements ActionListener {
 
 	private PanelCategorias PC;
+	private VistaPrincipal VP;
 	private CategoriaDAO miCategoria;
 	private String nombre;
 	
 	
-	public BotonesCategoria(PanelCategorias PC) {
+	public BotonesCategoria(VistaPrincipal VP, PanelCategorias PC) {
 		
+		this.VP = VP;
 		this.PC = PC;
 		this.miCategoria = new CategoriaDAO();
 	}

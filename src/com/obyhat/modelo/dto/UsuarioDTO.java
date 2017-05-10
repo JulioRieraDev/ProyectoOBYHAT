@@ -15,9 +15,10 @@ public class UsuarioDTO {
 		this.idUsuario = idUsuario;
 	}
 
-	public UsuarioDTO(String tipo_de_Usuario) {
+
+	public UsuarioDTO(String nombre) {
 		
-		this.tipo_de_Usuario = tipo_de_Usuario;
+		this.nombre = nombre;
 	}
 
 	public UsuarioDTO(int idTipoUsuario, String tipo_de_Usuario) {

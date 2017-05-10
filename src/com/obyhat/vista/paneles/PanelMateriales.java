@@ -7,6 +7,7 @@ package com.obyhat.vista.paneles;
 
 import com.obyhat.controlador.BotonesMaterial;
 import com.obyhat.resources.components.txt;
+import com.obyhat.vista.principal.VistaPrincipal;
 import com.obyhat.resources.components.labelForm;
 import com.obyhat.resources.components.Botones;
 import com.obyhat.resources.components.labelTitulo;
@@ -60,41 +61,12 @@ public class PanelMateriales extends JPanel{
      private javax.swing.JComboBox<String> comboCategoria;    
      private JDateChooser  comboFecha;
      
-    
-    private void dimension(int x, int y, JPanel p){
-    
-        Dimension panelD= new Dimension(x,y);
-        p.setPreferredSize(panelD);
-        p.setMaximumSize(panelD);
-    }
-    
-    public JScrollPane Creandotabla(JScrollPane scrollPane){
-    
-        modeloTabla = new DefaultTableModel(datos,column);
-        
-        scrollPane= new JScrollPane();
-        TablaMaterialesReg= new JTable();
-        TablaMaterialesReg.getTableHeader().setFont(new Font ("Acme", 1,16));// Encabezado de tablaObras
-        //tablaObras.getTableHeader().setBackground(Color.black);
-        // tablaObras.getTableHeader().setForeground(Color.BLUE);
-        //tablaObras.getTableHeader().setReorderingAllowed(false);// No permite que se muevan las columnas
-        TablaMaterialesReg.setModel(modeloTabla);
-        scrollPane.setViewportView(TablaMaterialesReg);
-        
-        return scrollPane;
-    }
-    
-    
-    public void LimpiarCampos(){
-        
-        txtNombreMat.setText("");
-        txtCodigoMat.setText("");
-        txtCantidadMat.setText("");
-        
-        
-    }
-    
-    public PanelMateriales(){
+     private VistaPrincipal VP;
+     
+   public PanelMateriales(VistaPrincipal VP){
+    	
+    	this.VP = VP;
+    	
         setLayout(new GridLayout(1, 0, 0, 0));
 		
 	scrollPane = new JScrollPane();	
@@ -127,7 +99,7 @@ public class PanelMateriales extends JPanel{
         //btnModificar.addActionListener(CM);
         //btnEliminar.addActionListener(CM);
         
-        BotonesMaterial BM = new BotonesMaterial(this);
+        BotonesMaterial BM = new BotonesMaterial(VP,this);
         btnAgregar.addActionListener(BM);
         btnEliminar.addActionListener(BM);
          
@@ -306,6 +278,41 @@ public class PanelMateriales extends JPanel{
 		}
 	}
 
+    
+    private void dimension(int x, int y, JPanel p){
+    
+        Dimension panelD= new Dimension(x,y);
+        p.setPreferredSize(panelD);
+        p.setMaximumSize(panelD);
+    }
+    
+    public JScrollPane Creandotabla(JScrollPane scrollPane){
+    
+        modeloTabla = new DefaultTableModel(datos,column);
+        
+        scrollPane= new JScrollPane();
+        TablaMaterialesReg= new JTable();
+        TablaMaterialesReg.getTableHeader().setFont(new Font ("Acme", 1,16));// Encabezado de tablaObras
+        //tablaObras.getTableHeader().setBackground(Color.black);
+        // tablaObras.getTableHeader().setForeground(Color.BLUE);
+        //tablaObras.getTableHeader().setReorderingAllowed(false);// No permite que se muevan las columnas
+        TablaMaterialesReg.setModel(modeloTabla);
+        scrollPane.setViewportView(TablaMaterialesReg);
+        
+        return scrollPane;
+    }
+    
+    
+    public void LimpiarCampos(){
+        
+        txtNombreMat.setText("");
+        txtCodigoMat.setText("");
+        txtCantidadMat.setText("");
+        
+        
+    }
+    
+    
     public DefaultTableModel getModeloTabla() {
         return modeloTabla;
     }
@@ -435,14 +442,7 @@ public class PanelMateriales extends JPanel{
     }
     
     
-    
-
-    
-    
-
-   
-    
-      public static void main(String args[]) {
+      /*public static void main(String args[]) {
 		JFrame frame = new JFrame("Probando panel individual...");
 		frame.setLayout(new GridLayout());
 		PanelMateriales PA = new PanelMateriales();
@@ -453,5 +453,5 @@ public class PanelMateriales extends JPanel{
                 frame.setLocation(100, 250);
                 frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
-	}      
+	}    */  
 }

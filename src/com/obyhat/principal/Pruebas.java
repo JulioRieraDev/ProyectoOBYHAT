@@ -5,7 +5,6 @@ import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 
 import com.obyhat.controlador.BotonesObras;
-import com.obyhat.modelo.ModeloObras;
 import com.obyhat.modelo.dao.AsignarDAO;
 import com.obyhat.modelo.dao.CategoriaDAO;
 import com.obyhat.modelo.dao.ObraDAO;

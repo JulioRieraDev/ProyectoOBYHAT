@@ -3,11 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.obyhat.vista.login;
+package com.obyhat.vista.paneles;
 import java.awt.Font;
-
-import javax.swing.JButton;
-import javax.swing.JTextField;
 
 import com.obyhat.modelo.dto.UsuarioDTO;
 import com.obyhat.vista.principal.VistaPrincipal;
@@ -18,7 +15,7 @@ import com.obyhat.vista.principal.VistaPrincipal;
  */
 public class PanelLogin extends javax.swing.JFrame {
 
-    VistaPrincipal miPruebaPanel;
+    private VistaPrincipal miPruebaPanel;
     
     //Fuente para los formularios.
     public static final Font fontTitlog = new Font("Myriad Pro", 0, 18);
@@ -124,7 +121,11 @@ public class PanelLogin extends javax.swing.JFrame {
         btnSalir.setText("SALIR");
         btnSalir.setBorderPainted(false);
         btnSalir.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        
+        btnSalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalirActionPerformed(evt);
+            }
+        });
 
         btnIniciar.setBackground(new java.awt.Color(254, 92, 93));
         btnIniciar.setFont(fontBtnlog);
@@ -132,7 +133,11 @@ public class PanelLogin extends javax.swing.JFrame {
         btnIniciar.setText("INICIAR");
         btnIniciar.setBorderPainted(false);
         btnIniciar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        
+        btnIniciar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnIniciarActionPerformed(evt);
+            }
+        });
 
         txtPass.setBackground(new java.awt.Color(44, 62, 80));
         txtPass.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
@@ -198,42 +203,32 @@ public class PanelLogin extends javax.swing.JFrame {
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 90, 340, 390));
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/obyhat/resources/img/PL1.png"))); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/PL1.png"))); // NOI18N
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(-1, 0, -1, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-   
-  public UsuarioDTO obtenerDatos() {
-
-    return new UsuarioDTO(txtUsuario.getText());
-  }
-
-  public JButton getBtnIniciar() {
-    return btnIniciar;
-  }
-
-      public void setBtnIniciar(JButton btnIniciar) {
-        this.btnIniciar = btnIniciar;
-      }
-
-      public JButton getBtnSalir() {
-        return btnSalir;
-      }
-
-      public void setBtnSalir(JButton btnSalir) {
-        this.btnSalir = btnSalir;
-      }
-
-      public JTextField getTxtUsuario() {
-        return txtUsuario;
-      }
-
-      public void setTxtUsuario(JTextField txtUsuario) {
-        this.txtUsuario = txtUsuario;
-      }
+    public UsuarioDTO obtenerDatos() {
+    	
+    	return new UsuarioDTO(txtUsuario.getText());
+    }
     
+    private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
+        
+        System.exit(0);
+    }//GEN-LAST:event_btnSalirActionPerformed
+
+    private void btnIniciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIniciarActionPerformed
+        
+    	System.out.println(this.obtenerDatos().getNombre()); 
+    	
+    	/*PanelLogin.this.dispose();
+        miPruebaPanel = new VistaPrincipal();
+        miPruebaPanel.setVisible(true);*/
+    }//GEN-LAST:event_btnIniciarActionPerformed
+
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnIniciar;
     private javax.swing.JButton btnSalir;
@@ -251,5 +246,4 @@ public class PanelLogin extends javax.swing.JFrame {
     private javax.swing.JPasswordField txtPass;
     private javax.swing.JTextField txtUsuario;
     // End of variables declaration//GEN-END:variables
-
 }

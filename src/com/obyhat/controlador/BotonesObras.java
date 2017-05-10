@@ -3,11 +3,12 @@ package com.obyhat.controlador;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import com.obyhat.modelo.ModeloObras;
 import com.obyhat.modelo.dao.AsignarDAO;
 import com.obyhat.modelo.dao.ObraDAO;
 import com.obyhat.modelo.dto.ObrasDTO;
 import com.obyhat.vista.paneles.PanelObras;
+import com.obyhat.vista.principal.VistaPrincipal;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,13 +17,15 @@ import javax.swing.JOptionPane;
 public class BotonesObras implements ActionListener {
 
 	private PanelObras PO;
+	private VistaPrincipal VP;
 	private ObraDAO miObraDAO;
 	private BotonesAsignar asignar;
 	private String nombre;
 	
 	
-	public BotonesObras(PanelObras PO) {
+	public BotonesObras(VistaPrincipal VP,PanelObras PO) {
 		
+		this.VP = VP;
 		this.PO = PO;
 		this.miObraDAO = new ObraDAO();
 		//this.asignar = new BotonesAsignar(null);

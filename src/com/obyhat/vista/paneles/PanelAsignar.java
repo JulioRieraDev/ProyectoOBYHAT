@@ -36,6 +36,7 @@ import javax.swing.table.DefaultTableModel;
 import org.freixas.jcalendar.JCalendarCombo;
 
 import com.obyhat.controlador.BotonesAsignar;
+import com.obyhat.controlador.BotonesObras;
 import com.obyhat.controlador.TextoAsignar;
 import com.obyhat.modelo.dto.AsignarDTO;
 import com.obyhat.modelo.dto.CategoriaDTO;
@@ -45,6 +46,7 @@ import com.obyhat.resources.components.Separator;
 import com.obyhat.resources.components.labelForm;
 import com.obyhat.resources.components.labelTitulo;
 import com.obyhat.resources.components.txt;
+import com.obyhat.vista.principal.VistaPrincipal;
 import com.toedter.calendar.JDateChooser;
 import com.toedter.calendar.JDayChooser;
 /**
@@ -78,13 +80,16 @@ public class PanelAsignar extends JPanel{
     // Elegir fecha.
     private JDateChooser comboFecha;
     // Controladores
-    private BotonesAsignar BA      = new BotonesAsignar(this);
+    private BotonesAsignar BA;
     private TextoAsignar TA 	   = new TextoAsignar(this);
     private GridBagConstraints gbc = new GridBagConstraints();
     
+    private VistaPrincipal VP;
     
     public PanelAsignar(){
         
+    	BA = new BotonesAsignar(this);
+    			 
     	setLayout(new GridLayout(1, 0, 0, 0));
 		
     	scrollConstructor = new JScrollPane();	
@@ -107,6 +112,7 @@ public class PanelAsignar extends JPanel{
         // Llenar automaticamente las tablas con la consultas
         // a la base de datos.
         //ObrasDTO obrasDTO = new ObrasDTO();
+        this.vaciar_comboObra();
         this.BA.obtenerObras(comboObra);
         this.BA.obtenerMateriales();
         this.control();
@@ -507,7 +513,7 @@ public class PanelAsignar extends JPanel{
     this.btnVerAsignaciones = btnVerAsignaciones;
   }
 
-  public static void main(String args[]) {
+ /* public static void main(String args[]) {
 		
 		PanelAsignar PA = new PanelAsignar();
 		
@@ -520,6 +526,6 @@ public class PanelAsignar extends JPanel{
 		frame.getContentPane().setBackground(Color.WHITE);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
-	}
+	}*/
             
 }

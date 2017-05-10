@@ -69,10 +69,10 @@ public class VistaPrincipal extends JFrame {
 	
         //INSTANCIANDO LOS DIFERENTES PANELES A MOSTRAR
         private PanelInicio      v0 = new PanelInicio();
-        private PanelMateriales  v1 = new PanelMateriales();
+        private PanelMateriales  v1 = new PanelMateriales(this);
         private PanelAsignar     v2 = new PanelAsignar();
-        private PanelCategorias  v3 = new PanelCategorias();
-        private PanelObras       v4 = new PanelObras();
+        private PanelCategorias  v3 = new PanelCategorias(this);
+        private PanelObras       v4 = new PanelObras(this);
         //private PanelProveedores v5 = new PanelProveedores();
         private PanelUsuarios    v6 = new PanelUsuarios();
         //private PanelModificacionesMat v7 = new  PanelModificacionesMat();

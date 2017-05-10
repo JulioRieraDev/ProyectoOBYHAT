@@ -7,16 +7,19 @@ import javax.swing.JOptionPane;
 
 import com.obyhat.modelo.dao.MaterialesDAO;
 import com.obyhat.vista.paneles.PanelMateriales;
+import com.obyhat.vista.principal.VistaPrincipal;
  
 public class BotonesMaterial implements ActionListener {
    
     private PanelMateriales PM;
+    private VistaPrincipal VP;
     private MaterialesDAO materialesDAO;
     
     
    
-    public BotonesMaterial(PanelMateriales PM) {
+    public BotonesMaterial(VistaPrincipal VP,PanelMateriales PM) {
        
+    	this.VP = VP;
         this.PM = PM;
         this.materialesDAO = new MaterialesDAO();
         

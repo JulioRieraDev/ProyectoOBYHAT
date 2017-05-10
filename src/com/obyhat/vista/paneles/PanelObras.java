@@ -34,6 +34,7 @@ import com.obyhat.controlador.BotonesObras;
 import com.obyhat.modelo.conexion.Conexion;
 import com.obyhat.modelo.dto.ObrasDTO;
 import com.obyhat.resources.components.*;
+import com.obyhat.vista.principal.VistaPrincipal;
 
 import java.awt.FlowLayout;
 
@@ -61,12 +62,16 @@ public class PanelObras extends JPanel{
     
     private TextAutoCompleter autoCompletar;
     
-    private BotonesObras CO = new BotonesObras(this);
+    private BotonesObras CO;
     private TextoObras CT = new TextoObras(this);
     
+    private VistaPrincipal VP;
     
-    public PanelObras(){
+    public PanelObras(VistaPrincipal VP){
         
+    	this.VP = VP;
+    	this.CO = new BotonesObras(VP ,this);
+    	
     	setLayout(new GridLayout(1, 0, 0, 0));
 		scrollPane = new JScrollPane();	
 		
@@ -434,7 +439,7 @@ public class PanelObras extends JPanel{
 		this.btnActualizar = btnActualizar;
 	}
 
-	public static void main(String args[]) {
+	/*public static void main(String args[]) {
 		JFrame frame = new JFrame("Probando panel individual...");
 		frame.setLayout(new GridLayout());
 		PanelObras PA = new PanelObras();
@@ -445,5 +450,5 @@ public class PanelObras extends JPanel{
 		frame.setLocationRelativeTo(null);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
-	}      
+	} */    
 }

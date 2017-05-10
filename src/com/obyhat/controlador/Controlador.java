@@ -20,12 +20,13 @@ import com.obyhat.vista.principal.VistaPrincipal;
 public class Controlador implements ActionListener {
 
     VistaPrincipal aux;
-    private PanelAsignar bUsuario;
+    private PanelAsignar PA;
     
     public Controlador(VistaPrincipal adn){
     
+    	this.PA = PA;
        this.aux = adn;
-       bUsuario = new PanelAsignar();
+      // bUsuario = new PanelAsignar();
     }
     
     @Override
@@ -60,6 +61,8 @@ public class Controlador implements ActionListener {
         if (e.getSource()==aux.getItemAsignar()) {
             
             System.out.println("ItemMenu Asignar Escuchando!");
+            
+            PA = new PanelAsignar();
             
             CardLayout cl = (CardLayout)(aux.getPanelCentral().getLayout());
 			    cl.show(aux.getPanelCentral(), aux.VENTANA2);

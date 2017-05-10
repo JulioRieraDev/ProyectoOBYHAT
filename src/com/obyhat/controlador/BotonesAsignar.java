@@ -16,6 +16,7 @@ import com.obyhat.modelo.dto.UsuarioDTO;
 import com.obyhat.vista.paneles.HistorialAsignaciones;
 import com.obyhat.vista.paneles.PanelAsignar;
 import com.obyhat.vista.paneles.SeleccionarObra;
+import com.obyhat.vista.principal.VistaPrincipal;
 
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
