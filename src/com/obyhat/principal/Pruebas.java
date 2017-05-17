@@ -19,7 +19,7 @@ import java.util.List;
 
 public class Pruebas {
 
-	/*public static void main(String[] args) {
+	public static void main(String[] args) {
 		
 		try {
 			
@@ -28,7 +28,7 @@ public class Pruebas {
 		} catch(Exception e) {
 			  
 			System.out.println("Error al cargar el LAF: " + e);
-		}*/
+		}
 		
 		/*// Instancias de las clases.
 		ModeloObras modeloObras = new ModeloObras();
@@ -103,13 +103,13 @@ public class Pruebas {
 		 * --------------------------------------------------------------------------
 		 */
 		
-			//UsuarioDAO usuarioDAO = new UsuarioDAO();
+			UsuarioDAO usuario = new UsuarioDAO();
 		
-			/*CategoriaDTO consultarCat = categoriaDAO.Consultar("Vidrios");
+			UsuarioDTO resultado = usuario.Consultar("Pepe");
 			//System.out.println(consultarCat.getIdCategoria()+" - "+consultarCat.getNombreCategoria()+" - "+consultarCat.);
-			JOptionPane.showMessageDialog(null, consultarCat.getIdCategoria()+"\n"
-											   +consultarCat.getNombreCategoria()+"\n"
-											   +consultarCat.getDesCategoria(), null, JOptionPane.INFORMATION_MESSAGE);*/
+			JOptionPane.showMessageDialog(null, resultado.getNombre()+"\n"
+											   +resultado.getContrasena(), 
+										  null, JOptionPane.INFORMATION_MESSAGE);
 				
 			//usuarioDAO.Ingresar(new UsuarioDTO("Gordo","Gordo"));
 			
@@ -158,6 +158,6 @@ public class Pruebas {
 		    }*/
 		
 		
-	/*}*/
+	}
 
 }
